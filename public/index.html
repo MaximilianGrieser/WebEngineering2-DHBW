@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
+    <title>WebKalender</title>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div id="screen">
+        <!--Navbar-->
+        <div class="navbar">
+            <div class="title">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar3-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2H0z"/>
+                    <path fill-rule="evenodd" d="M0 3h16v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm6.5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-8 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm2 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg> Web Kalender
+            </div>
+
+            <a href="html/impressum.html">Imprint</a>
+
+        </div>
+
+        <div class="calender">
+            <div class="month">
+                <button class="prev-month button-month" onclick="prevMonth()">
+                    <svg class="bi bi-chevron-compact-left" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
+                    </svg>
+                </button>
+                <button class="next-month button-month" onclick="nextMonth()">
+                    <svg class="bi bi-chevron-compact-right" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
+                    </svg>
+                </button>
+                <p class="month-header" id="currMonth">Month</p>
+            </div>
+
+            <div class="days">
+                <table class="days_table">
+                    <tr>
+                        <th id="weekday0">SUNDAY</th>
+                        <th id="weekday1">MONDAY</th>
+                        <th id="weekday2">TUESDAY</th>
+                        <th id="weekday3">WEDNESDAY</th>
+                        <th id="weekday4">THURSDAY</th>
+                        <th id="weekday5">FRIDAY</th>
+                        <th id="weekday6">SATURDAY</th>
+                    </tr>
+                    <tr class="days-row0">
+                        <td id="weekday_days_0_row_0" onclick="listAppointments(0,0)">X</td>
+                        <td id="weekday_days_1_row_0" onclick="listAppointments(0,1)">X</td>
+                        <td id="weekday_days_2_row_0" onclick="listAppointments(0,2)">X</td>
+                        <td id="weekday_days_3_row_0" onclick="listAppointments(0,3)">X</td>
+                        <td id="weekday_days_4_row_0" onclick="listAppointments(0,4)">X</td>
+                        <td id="weekday_days_5_row_0" onclick="listAppointments(0,5)">X</td>
+                        <td id="weekday_days_6_row_0" onclick="listAppointments(0,6)">X</td>
+                    </tr>
+                    <tr class="days-row1">
+                        <td id="weekday_days_0_row_1" onclick="listAppointments(1,0)">X</td>
+                        <td id="weekday_days_1_row_1" onclick="listAppointments(1,1)">X</td>
+                        <td id="weekday_days_2_row_1" onclick="listAppointments(1,2)">X</td>
+                        <td id="weekday_days_3_row_1" onclick="listAppointments(1,3)">X</td>
+                        <td id="weekday_days_4_row_1" onclick="listAppointments(1,4)">X</td>
+                        <td id="weekday_days_5_row_1" onclick="listAppointments(1,5)">X</td>
+                        <td id="weekday_days_6_row_1" onclick="listAppointments(1,6)">X</td>
+                    </tr>
+                    <tr class="days-row2">
+                        <td id="weekday_days_0_row_2" onclick="listAppointments(2,0)">X</td>
+                        <td id="weekday_days_1_row_2" onclick="listAppointments(2,1)">X</td>
+                        <td id="weekday_days_2_row_2" onclick="listAppointments(2,2)">X</td>
+                        <td id="weekday_days_3_row_2" onclick="listAppointments(2,3)">X</td>
+                        <td id="weekday_days_4_row_2" onclick="listAppointments(2,4)">X</td>
+                        <td id="weekday_days_5_row_2" onclick="listAppointments(2,5)">X</td>
+                        <td id="weekday_days_6_row_2" onclick="listAppointments(2,6)">X</td>
+                    </tr>
+                    <tr class="days-row3">
+                        <td id="weekday_days_0_row_3" onclick="listAppointments(3,0)">X</td>
+                        <td id="weekday_days_1_row_3" onclick="listAppointments(3,1)">X</td>
+                        <td id="weekday_days_2_row_3" onclick="listAppointments(3,2)">X</td>
+                        <td id="weekday_days_3_row_3" onclick="listAppointments(3,3)">X</td>
+                        <td id="weekday_days_4_row_3" onclick="listAppointments(3,4)">X</td>
+                        <td id="weekday_days_5_row_3" onclick="listAppointments(3,5)">X</td>
+                        <td id="weekday_days_6_row_3" onclick="listAppointments(3,6)">X</td>
+                    </tr>
+                    <tr class="days-row4">
+                        <td id="weekday_days_0_row_4" onclick="listAppointments(4,0)">X</td>
+                        <td id="weekday_days_1_row_4" onclick="listAppointments(4,1)">X</td>
+                        <td id="weekday_days_2_row_4" onclick="listAppointments(4,2)">X</td>
+                        <td id="weekday_days_3_row_4" onclick="listAppointments(4,3)">X</td>
+                        <td id="weekday_days_4_row_4" onclick="listAppointments(4,4)">X</td>
+                        <td id="weekday_days_5_row_4" onclick="listAppointments(4,5)">X</td>
+                        <td id="weekday_days_6_row_4" onclick="listAppointments(4,6)">X</td>
+                    </tr>
+                    <tr class="days-row5">
+                        <td id="weekday_days_0_row_5" onclick="listAppointments(5,0)">X</td>
+                        <td id="weekday_days_1_row_5" onclick="listAppointments(5,1)">X</td>
+                        <td id="weekday_days_2_row_5" onclick="listAppointments(5,2)">X</td>
+                        <td id="weekday_days_3_row_5" onclick="listAppointments(5,3)">X</td>
+                        <td id="weekday_days_4_row_5" onclick="listAppointments(5,4)">X</td>
+                        <td id="weekday_days_5_row_5" onclick="listAppointments(5,5)">X</td>
+                        <td id="weekday_days_6_row_5" onclick="listAppointments(5,6)">X</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <button class="add-calender-entry" id="add-callender-entry" onclick="newEntryBtn()">
+        <svg class="bi bi-plus-circle" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        </svg>
+    </button>
+
+    <!--Neuer Termin-->
+    <div class="new-entry-form" id="new-entry-form">
+        <form class="newEntry" id="newEntry">
+            <table class="new-entry-form">
+                <tr>
+                    <td class="new-entry-form-title" colspan="2">
+                        <input type="text" id="ftitle" name="title" value="TITLE" onfocus="this.value=''">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        START
+                    </td>
+                    <td id="endDate-text">
+                        END
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" id="fstartdate" name="startdate">
+                    </td>
+                    <td id="endDate-date">
+                        <input type="date" id="fenddate" name="enddate">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="time" id="fstarttime" name="starttime">
+                    </td>
+                    <td id="endDate-time">
+                        <input type="time" id="fendtime" name="endtime">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="new-entry-form-fullday">
+                        <input type="checkbox" id="fganztag" name="ganztag" value="true" onclick="hideDateEnd()">
+                        <label for="fganztag">FULLDAY</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea name="summary" id="fsummary" rows="5" cols="60" onfocus="this.value=''">SUMMARY</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="fimg"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="fpicture">PICTURE</label><br>
+                        <input type="file" id="fpicture" name="picture" class="new-entry-form-picture">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="femail">EMAIL</label><br>
+                        <input type="email" id="femail" name="email" value="organizer@example.de" onfocus="this.value=''">
+                    </td>
+                    <td>
+                        <label for="fstatus">STATUS</label><br>
+                        <select class="fstatus" id="fstatus" name="status">
+                            <option>Busy</option>
+                            <option>Free</option>
+                            <option>Tentative</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="fhomepage">LINK</label><br>
+                        <input type="url" id="fhomepage" name="homepage">
+                    </td>
+                    <td>
+                        <label for="flocation">LOCATION</label><br>
+                        <input type="text" id="flocation" name="location">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="fcategory">CATEGORY</label>
+                        <div id="table-select-td"></div>
+                        <input type="button" value="addCategory" class="new-entry-form-save" onclick="addMoreCategorys()">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="new-entry-form-save" colspan="2">
+                        <input type="button" id="fsubmit" value="Speichern" onclick="submitEntry()">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x new-entry-form-close" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onclick="closeNewEntry()">
+            <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+            <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+        </svg>
+    </div>
+
+    <!-- Termine an Tag -->
+    <div class="appointments-at-day" id="appointments-at-day">
+        <div class="appointments-at-day-heading">
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onclick="closeListAppointments()">
+                <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+            </svg>
+            <p class="appointments-at-day-text" id="appointments-at-day-text">Appointments on Day x/y</p>
+        </div>
+        <div class="appointments-at-day-navbar">
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onclick="newEntryIcon()">
+                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            </svg>
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+        </div>
+        <div class="appointments-at-day-content" id="appointments-at-day-content"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
