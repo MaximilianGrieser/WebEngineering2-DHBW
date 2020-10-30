@@ -348,7 +348,7 @@ function listAppointments(row, cell) {
                             }
                         }
     
-                        request.open("DELETE", "http://dhbw.radicalsimplicity.com/calendar/2319319/events/" + appointmentsGrid[row][cell][selectedId].id, false);
+                        request.open("DELETE", "http://localhost:3000/events/" + appointmentsGrid[row][cell][selectedId].id, false);
                         request.send();
     
                         loadAppointmentsFromDataBase();
@@ -373,7 +373,7 @@ function loadAppointmentsFromDataBase() {
         }
     }
 
-    request.open("GET", "http://dhbw.radicalsimplicity.com/calendar/2319319/events", false);
+    request.open("GET", "http://localhost:3000/events", false);
     request.send();
 
     showCalendar(currentMonth, currentYear);
@@ -517,13 +517,14 @@ function submitEntry() {
         }
     
         if (isNewEntry) {
-            request.open("POST", "http://dhbw.radicalsimplicity.com/calendar/2319319/events", true);
+            request.open("POST", "http://localhost:3000/events", true);
         } else {
             console.log(selectedRow, selectedCell, selectedId);
             console.log(appointmentsGrid[selectedRow][selectedCell][selectedId].id);
             request.open("PUT", "http://dhbw.radicalsimplicity.com/calendar/2319319/events/" + appointmentsGrid[selectedRow][selectedCell][selectedId].id, true);
         }
         console.log(JSON.stringify(entry));
+        request.setRequestHeader("Content-Type", "application/json");
         request.send(JSON.stringify(entry));
     
         closeNewEntry();

@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 var mysql = require('mysql');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -47,7 +49,7 @@ function checkIfTablesExists() {
 }
 
 function createDatabase() {
-    con.query("CREATE DATABASE calendar", function (err, result) {
+    con.query("CREATE DATABASE calendar", function (err) {
         if (err) throw err;
         console.log("Database created");
     });
@@ -61,7 +63,7 @@ function createUsers(){
 }
 
 function createEvents(){
-    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL)", function(err) {
+    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL, location VARCHAR(255), organizer VARCHAR(255) NOT NULL, start VARCHAR(255) NOT NULL, end VARCHAR(255) NOT NULL, statusId VARCHAR(255), allday BOOLEAN, webpage VARCHAR(255), imagedata VARCHAR(255), categorieId VARCHAR(255), extra VARCHAR(1020))", function(err) {
         if(err) throw err
         console.log("Created Table Events");
     });
@@ -73,3 +75,31 @@ function createGroups(){
         console.log("Created Table Users");
     });
 }
+
+// ID atribute und all day muss extra gehandelt werden.
+app.post("/events", jsonParser, (req, res) => {
+    console.log(req.body);
+    con.query("INSERT INTO events(title, location, organizer, start, end, statusId, allday, webpage, imagedata, categorieId, extra) VALUES('"+ req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + 1 +"','" + req.body.extra +"')", function(err) {
+        if(err) throw err
+        console.log("Event added");
+    }); 
+    res.json(req.body);
+})
+
+app.get("/events", jsonParser, (req, res) => {
+    con.query("SELECT * FROM events", function(err, ress){
+        if(err) throw err
+        res.json(ress);
+        console.log("All events requested");
+    });
+})
+
+app.delete("/events/:id", jsonParser, (req, res) => {
+    con.query("DELETE FROM events WHERE id = '" + req.params.id + "'", function(err, ress){
+        if(err) throw err
+        console.log("Removed envent with id: " + req.params.id);
+        res.send()
+    });
+})
+
+app.listen(port, () => console.log('Calender App listening on port ' + port + '!'))
