@@ -40,12 +40,52 @@ let isNewEntry = true;
 let firstLoad = true;
 
 window.onload = function() {
+    blurScreenAndButton()
+    document.getElementById("screen").disabled = true,
     loadCategorysFromDataBase();
     loadAppointmentsFromDataBase();
     document.getElementById("weekday" + todayDay).classList.add("weekday-today");
     let minDate = today.toISOString().slice(0, 10);
     $('#fstartdate').attr('min', minDate);
     $('#fenddate').attr('min', minDate);
+}
+
+function newuser() {
+    let id = document.getElementById("fuserid").value;
+    let password = document.getElementById("fpassword").value;
+
+    let newUser = {
+        userID: id,
+        password: password
+    }
+
+    let request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:3000/users", true);
+
+    console.log(JSON.stringify(newUser));
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(newUser));
+}
+
+function login() {
+    let id = document.getElementById("fuserid").value;
+    let password = document.getElementById("fpassword").value;
+
+    let request = new XMLHttpRequest();
+
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if(JSON.parse(this.responseText)[0].password == password){
+                console.log("Login Succesfull");
+                document.getElementById("login").style.display = "none";
+                removeBlurScreenAndButton();
+            }
+        }
+    }
+
+    request.open("GET", "http://localhost:3000/users/"+ id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send();
 }
 
 function showCalendar(month, year) {

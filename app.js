@@ -3,6 +3,8 @@ const app = express();
 const port = 3000;
 var mysql = require('mysql');
 const bodyParser = require('body-parser');
+const { json } = require('body-parser');
+const { request } = require('express');
 const jsonParser = bodyParser.json();
 
 var con = mysql.createConnection({
@@ -56,7 +58,7 @@ function createDatabase() {
 }
 
 function createUsers(){
-    con.query("CREATE TABLE users(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL)", function(err) {
+    con.query("CREATE TABLE users(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL)", function(err) {
         if(err) throw err
         console.log("Created Table Users");
     });
@@ -76,11 +78,25 @@ function createGroups(){
     });
 }
 
+
+app.post("/users", jsonParser, (req, res) => {
+    con.query("INSERT INTO users(userID, password) VALUES('" + req.body.userID + "','" + req.body.password + "')", function(err) {
+        if(err) throw err;
+        console.log("User added");
+    });    
+})
+
+app.get("/users/:id", jsonParser, (req, res) => {
+    con.query("SELECT password FROM users WHERE userID = '" + req.params.id + "'", function(err, ress) {
+        if(err) throw err;
+        res.json(ress);
+    });
+})
+
 // ID atribute und all day muss extra gehandelt werden.
 app.post("/events", jsonParser, (req, res) => {
-    console.log(req.body);
     con.query("INSERT INTO events(title, location, organizer, start, end, statusId, allday, webpage, imagedata, categorieId, extra) VALUES('"+ req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + 1 +"','" + req.body.extra +"')", function(err) {
-        if(err) throw err
+        if(err) throw err;
         console.log("Event added");
     }); 
     res.json(req.body);
