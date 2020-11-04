@@ -16,6 +16,10 @@ div.login input {
     width: 16em;
 }
 
+div.login input.btn {
+    margin-bottom: 10px;
+}
+
 div.navbar {
     font-size: large;
     font-weight: bold;

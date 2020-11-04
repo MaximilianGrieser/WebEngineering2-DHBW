@@ -282,12 +282,16 @@ function resetInputFields() {
 
 function blurScreenAndButton() {
     document.getElementById("screen").classList.add("blur");
+    document.getElementById("screen").style.pointerEvents = "none";
     document.getElementById("add-callender-entry").classList.add("blur");
+    document.getElementById("add-callender-entry").style.pointerEvents = "none";
 }
 
 function removeBlurScreenAndButton() {
     document.getElementById("screen").classList.remove("blur");
+    document.getElementById("screen").style.pointerEvents = "";
     document.getElementById("add-callender-entry").classList.remove("blur");
+    document.getElementById("add-callender-entry").style.pointerEvents = "";
 }
 
 function listAppointments(row, cell) {

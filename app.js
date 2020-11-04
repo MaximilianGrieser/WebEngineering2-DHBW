@@ -98,8 +98,8 @@ app.post("/events", jsonParser, (req, res) => {
     con.query("INSERT INTO events(title, location, organizer, start, end, statusId, allday, webpage, imagedata, categorieId, extra) VALUES('"+ req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + 1 +"','" + req.body.extra +"')", function(err) {
         if(err) throw err;
         console.log("Event added");
+        res.json(req.body);
     }); 
-    res.json(req.body);
 })
 
 app.get("/events", jsonParser, (req, res) => {
@@ -116,6 +116,23 @@ app.delete("/events/:id", jsonParser, (req, res) => {
         console.log("Removed envent with id: " + req.params.id);
         res.send()
     });
+})
+
+app.get("/groups", jsonParser, (req, res) => {
+    con.query("SELECT * FROM groups", function(err, ress){
+        if(err) throw err
+        res.json(ress);
+        console.log("All groups requested");
+    });
+})
+
+app.post("/groups", jsonParser, (req, res) => {
+    console.log(req.body)
+    con.query("INSERT INTO groups(name) VALUES('" + req.body.name + "')", function(err, ress){
+        if(err) throw err
+        console.log("Group added")
+        res.json()
+    })
 })
 
 app.listen(port, () => console.log('Calender App listening on port ' + port + '!'))
