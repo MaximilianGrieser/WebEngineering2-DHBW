@@ -18,7 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/categorys.css">
     <title>WebKalender</title>
     <link rel="shortcut icon" href="../favicon.ico">
 </head>
@@ -38,4 +38,19 @@
         <a href="impressum.html">Imprint</a>
         
     </div>
+
+    <div class="content">
+        <label for="scats" id="lcats">ALL CATEGORIES</label>
+        <select multiple class="form-control" id="sCats" ></select>
+    
+        <form>
+            <label for="fcatname">NAME</label><br>
+            <input type="text" id="fcatname" name="catname">
+        </form>
+    
+        <button onclick="newCategory()">NEW Category</button>
+        <button onclick="removeCategory()">REMOVE Category</button>
+    </div>
+
+    <script src="../js/categorys.js"></script>
 </body>

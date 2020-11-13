@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const path = require('path');
 var mysql = require('mysql');
 const bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const { request } = require('express');
 const jsonParser = bodyParser.json();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -18,6 +21,7 @@ con.connect(function(err) {
     console.log("Connected!");
     checkIfDatabaseExists("calendar");
 });
+
 
 function checkIfDatabaseExists(name) {
     con.query("SHOW DATABASES LIKE '" + name + "'", function(err, results) {
@@ -47,6 +51,8 @@ function checkIfTablesExists() {
         if(tables.indexOf("users") == -1) createUsers();
         if(tables.indexOf("events") == -1) createEvents();
         if(tables.indexOf("groups") == -1) createGroups();
+        if(tables.indexOf("categories") == -1) createCategories();
+        if(tables.indexOf("usergroup") == -1) createUserGroup();
     });
 }
 
@@ -78,6 +84,20 @@ function createGroups(){
     });
 }
 
+function createUserGroup() {
+    con.query("CREATE TABLE usergroup(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID VARCHAR(255) NOT NULL, groupID VARCHAR(255) NOT NULL)", function(err) {
+        if(err) throw err
+        console.log("Created Table UserGroup");
+    });
+}
+
+function createCategories(){
+    con.query("CREATE TABLE categories(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL)", function(err) {
+        if(err) throw err
+        console.log("Created Table Categories");
+    });
+}
+
 
 app.post("/users", jsonParser, (req, res) => {
     con.query("INSERT INTO users(userID, password) VALUES('" + req.body.userID + "','" + req.body.password + "')", function(err) {
@@ -86,11 +106,26 @@ app.post("/users", jsonParser, (req, res) => {
     });    
 })
 
-app.get("/users/:id", jsonParser, (req, res) => {
-    con.query("SELECT password FROM users WHERE userID = '" + req.params.id + "'", function(err, ress) {
+app.get("/users", jsonParser, (req, res) => {
+    con.query("SELECT * FROM users ", function(err, ress) {
         if(err) throw err;
         res.json(ress);
+        console.log("All Users requested")
     });
+})
+
+app.get("/users/:id/:field", jsonParser, (req, res) => {
+    if(req.params.field == "userID"){
+        con.query("SELECT * FROM users WHERE userID = '" + req.params.id + "'", function(err, ress) {
+            if(err) throw err;
+            res.json(ress);
+        });
+    }else if(req.params.field == "ID"){
+        con.query("SELECT * FROM users WHERE id = '" + req.params.id + "'", function(err, ress) {
+            if(err) throw err;
+            res.json(ress);
+        });
+    }
 })
 
 // ID atribute und all day muss extra gehandelt werden.
@@ -118,6 +153,17 @@ app.delete("/events/:id", jsonParser, (req, res) => {
     });
 })
 
+app.put("/events/:id", jsonParser, (req, res) => {
+    //UPDATE table_name
+    //SET column1 = value1, column2 = value2, ...
+    //WHERE condition;
+    con.query("", function(err, ress){
+        if(err) throw err
+        console.log("Updated envent with id: " + req.params.id);
+        res.send()
+    });
+})
+
 app.get("/groups", jsonParser, (req, res) => {
     con.query("SELECT * FROM groups", function(err, ress){
         if(err) throw err
@@ -127,10 +173,58 @@ app.get("/groups", jsonParser, (req, res) => {
 })
 
 app.post("/groups", jsonParser, (req, res) => {
-    console.log(req.body)
+
     con.query("INSERT INTO groups(name) VALUES('" + req.body.name + "')", function(err, ress){
         if(err) throw err
         console.log("Group added")
+        res.json()
+    })
+})
+
+app.post("/usersgroup", jsonParser, (req, res) => {
+    con.query("INSERT INTO usergroup(userID, groupID) VALUES('" + req.body.userID + "','" + req.body.groupID + "')", function(err, ress) {
+        if(err) throw err;
+        console.log("Added User "+ req.body.userID +" To Group" + req.body.groupID)
+        res.json(ress);
+    });
+})
+
+app.get("/usersgroup/:id", jsonParser, (req, res) => {
+    con.query("SELECT * FROM usergroup WHERE groupID = '" + req.params.id + "'", function(err, ress){
+        if(err) throw err
+        console.log("Requested user group with groupId: " + req.params.id);
+        res.send(ress)
+    });
+})
+
+app.delete("/usersgroup/:userID/:groupID", jsonParser, (req, res) => {
+    con.query("DELETE FROM usergroup WHERE userID = '" + req.params.userID + "' and groupID = '" + req.params.groupID + "'", function(err, ress) {
+        if(err) throw err;
+        console.log("Deleted User From Group")
+        res.json(ress);
+    });
+})
+
+app.get("/categories", jsonParser, (req, res) => {
+    con.query("SELECT * FROM categories", function(err, ress){
+        if(err) throw err
+        res.json(ress);
+        console.log("All categories requested");
+    });
+})
+
+app.post("/categories", jsonParser, (req, res) => {
+    con.query("INSERT INTO categories(name) VALUES('" + req.body.name + "')", function(err, ress){
+        if(err) throw err
+        console.log("Categorie added")
+        res.json()
+    })
+})
+
+app.delete("/categories/:id", jsonParser, (req, res) => {
+    con.query("DELETE FROM categories WHERE id = '" + req.params.id + "'", function(err, ress){
+        if(err) throw err
+        console.log("Categorie added")
         res.json()
     })
 })

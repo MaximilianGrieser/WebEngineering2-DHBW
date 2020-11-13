@@ -18,7 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/groups.css">
     <title>WebKalender</title>
     <link rel="shortcut icon" href="../favicon.ico">
 </head>
@@ -39,7 +39,41 @@
         
     </div>
 
-    <button onclick="newGroup()">New Group</button>
+    <div class="content">
+        <table>
+            <tr>
+                <td>
+                    <label for="sGroups">EXISTING GROUPS</label>
+                    <select multiple class="form-control" id="sGroups" onchange="selectedGroupChanged()"></select>
+                </td>
+                <td>
+                    <label for="sUser" id="lUsers">PLEASE SELECT A GROUP</label>
+                    <select multiple class="form-control" id="sUser" ></select>
+                </td>
+                <td>
+                    <label for="sAllUser" id="lAllUsers">ALL USERS</label>
+                    <select multiple class="form-control" id="sAllUser" ></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form>
+                        <label for="fgroupname">NAME</label><br>
+                        <input type="text" id="fgroupname" name="groupname">
+                    </form>
+            
+                    <button onclick="newGroup()">New Group</button>
+                </td>
+                <td>
+                    <button onclick="removeFromGroup()">REMOVE USER FROM GROUP</button>        
+                </td>
+                <td>
+                    <button onclick="addUserToGroup()">ADD USER TO GROUP</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 
     <script src="../js/groups.js"></script>
 </body>

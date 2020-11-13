@@ -83,7 +83,7 @@ function login() {
         }
     }
 
-    request.open("GET", "http://localhost:3000/users/"+ id, true);
+    request.open("GET", "http://localhost:3000/users/"+ id + "/userID", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.send();
 }
@@ -599,18 +599,8 @@ function loadCategorysFromDataBase() {
         }
     }
 
-    request.open("GET", "http://dhbw.radicalsimplicity.com/calendar/2319319/categories", true);
+    request.open("GET", "http://localhost:3000/categories", true);
     request.send();
-}
-
-function addCategoryToDataBase(data) {
-    let categorie = {
-        name: data
-    }
-
-    let request = new XMLHttpRequest();
-    request.open("POST", "http://dhbw.radicalsimplicity.com/calendar/2319319/categories", true);
-    request.send(JSON.stringify(categorie));
 }
 
 function checkImgSize(imgUrl, docImg) {
