@@ -53,6 +53,7 @@ function checkIfTablesExists() {
         if(tables.indexOf("groups") == -1) createGroups();
         if(tables.indexOf("categories") == -1) createCategories();
         if(tables.indexOf("usergroup") == -1) createUserGroup();
+        if(tables.indexOf("eventcategories") == -1) createEventCategories();
     });
 }
 
@@ -71,7 +72,7 @@ function createUsers(){
 }
 
 function createEvents(){
-    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL, location VARCHAR(255), organizer VARCHAR(255) NOT NULL, start VARCHAR(255) NOT NULL, end VARCHAR(255) NOT NULL, statusId VARCHAR(255), allday BOOLEAN, webpage VARCHAR(255), imagedata VARCHAR(255), categorieId VARCHAR(255), extra VARCHAR(1020))", function(err) {
+    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID INT(255), title VARCHAR(255) NOT NULL, location VARCHAR(255), organizer VARCHAR(255) NOT NULL, start VARCHAR(255) NOT NULL, end VARCHAR(255) NOT NULL, statusId VARCHAR(255), allday BOOLEAN, webpage VARCHAR(255), imagedata VARCHAR(255), extra VARCHAR(1020))", function(err) {
         if(err) throw err
         console.log("Created Table Events");
     });
@@ -95,6 +96,13 @@ function createCategories(){
     con.query("CREATE TABLE categories(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL)", function(err) {
         if(err) throw err
         console.log("Created Table Categories");
+    });
+}
+
+function createEventCategories(){
+    con.query("CREATE TABLE eventcategories(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, eventID INT(255) NOT NULL, categoryID INT(255) NOT NULL)", function(err) {
+        if(err) throw err
+        console.log("Created Table Event-Categories");
     });
 }
 
@@ -130,20 +138,29 @@ app.get("/users/:id/:field", jsonParser, (req, res) => {
 
 // ID atribute und all day muss extra gehandelt werden.
 app.post("/events", jsonParser, (req, res) => {
-    con.query("INSERT INTO events(title, location, organizer, start, end, statusId, allday, webpage, imagedata, categorieId, extra) VALUES('"+ req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + 1 +"','" + req.body.extra +"')", function(err) {
+    let eventID;
+    con.query("INSERT INTO events(userID, title, location, organizer, start, end, statusId, allday, webpage, imagedata, extra) VALUES('"+ req.body.userID + "','" + req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + req.body.extra +"')", function(err, result) {
         if(err) throw err;
         console.log("Event added");
+        console.log(req.body.categories[0]);
+        eventID = result.insertId;
         res.json(req.body);
-    }); 
-})
+        for (var i = 0, len = req.body.categories.length; i< len; i++){
+            con.query("INSERT INTO eventcategories(eventID, categoryID) VALUES('"+ eventID + "','" + req.body.categories[i].id + "')", function (err) {
+                if(err) throw err;
+            });
+        }
+    });
+    })
 
-app.get("/events", jsonParser, (req, res) => {
-    con.query("SELECT * FROM events", function(err, ress){
+app.get("/events/:id", jsonParser, (req, res) => {
+    con.query("SELECT * FROM events WHERE userID = '" + req.params.id + "'", function(err, ress){
         if(err) throw err
         res.json(ress);
-        console.log("All events requested");
+        console.log("All events requested " + req.params.id);
     });
 })
+
 
 app.delete("/events/:id", jsonParser, (req, res) => {
     con.query("DELETE FROM events WHERE id = '" + req.params.id + "'", function(err, ress){

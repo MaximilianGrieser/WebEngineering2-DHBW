@@ -39,11 +39,12 @@ let appointmentsList;
 let isNewEntry = true;
 let firstLoad = true;
 
+let currentUser;
+
 window.onload = function() {
     blurScreenAndButton()
     document.getElementById("screen").disabled = true,
     loadCategorysFromDataBase();
-    loadAppointmentsFromDataBase();
     document.getElementById("weekday" + todayDay).classList.add("weekday-today");
     let minDate = today.toISOString().slice(0, 10);
     $('#fstartdate').attr('min', minDate);
@@ -76,7 +77,9 @@ function login() {
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(JSON.parse(this.responseText)[0].password == password){
-                console.log("Login Succesfull");
+                currentUser = JSON.parse(this.responseText)[0].id;
+                console.log("Login Succesfull" + currentUser);
+                loadAppointmentsFromDataBase();
                 document.getElementById("login").style.display = "none";
                 removeBlurScreenAndButton();
             }
@@ -417,7 +420,8 @@ function loadAppointmentsFromDataBase() {
         }
     }
 
-    request.open("GET", "http://localhost:3000/events", false);
+    request.open("GET", "http://localhost:3000/events/"+currentUser, false);
+    console.log("http://localhost:3000/events/"+currentUser);
     request.send();
 
     showCalendar(currentMonth, currentYear);
@@ -537,6 +541,7 @@ function submitEntry() {
 
     if(checked) {    setTimeout(() => {
         let entry = {
+            userID: currentUser,
             title: title,
             location: location,
             organizer: organizer,
