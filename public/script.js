@@ -271,10 +271,6 @@ function resetInputFields() {
     document.getElementById("fenddate").value = "";
     document.getElementById("fendtime").value = "";
     document.getElementById("fsummary").value = "SUMMARY";
-    document.getElementById("fimg").style.background = "";
-    document.getElementById("fimg").style.width = 0;
-    document.getElementById("fimg").style.height = 0;
-    document.getElementById("fpicture").value = "";
     document.getElementById("femail").value = "organizer@example.de";
     document.getElementById("fstatus").value = "Busy";
     document.getElementById("fhomepage").value = "";
@@ -352,20 +348,27 @@ function listAppointments(row, cell) {
                         hideDateEnd();
                     }
                     document.getElementById("fsummary").value = currAppointment.extra;
-                    let docImg = document.getElementById("fimg");
-                    checkImgSize(currAppointment.imageurl, docImg);
-                    docImg.style.backgroundImage = "url('" + currAppointment.imageurl + "')";
                     document.getElementById("femail").value = currAppointment.organizer;
-                    document.getElementById("fstatus").value = currAppointment.status;
+                    document.getElementById("fstatus").selectedIndex = currAppointment.status;
                     document.getElementById("fhomepage").value = currAppointment.webpage;
                     document.getElementById("flocation").value = currAppointment.location;
-    
-                    console.log(currAppointment.categories)
-                    if (currAppointment.categories.length == 1) {
-                        document.getElementById("fcategory-0").value = currAppointment.categories[0].name;
+
+                    let request = new XMLHttpRequest();
+                    let categories = [];
+                    request.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            categories = JSON.parse(this.responseText);
+                            console.log(this.responseText);
+                        }
+                    }
+                    request.open("GET", "http://localhost:3000/eventcategories/" + currAppointment.id, false);
+                    request.send();
+
+                    if (categories.length == 1) {
+                        document.getElementById("fcategory-0").value = categories[0].name;
                     } else {
                         let doc = document.getElementById("table-select-td");
-                        for (let i = 1; i < currAppointment.categories.length; i++) {
+                        for (let i = 1; i < categories.length; i++) {
                             let newSelect = document.createElement("select");
                             options.forEach(option => {
                                 newOption = document.createElement("option")
@@ -374,10 +377,11 @@ function listAppointments(row, cell) {
                             });
                             newSelect.id = "fcategory-" + i;
                             newSelect.classList.add("fcategory");
-                            newSelect.value = currAppointment.categories[i].name;
+                            newSelect.value = categories[i].name;
                             doc.append(newSelect);
                         }
                     }
+
                     newEntry();
                 }
             });
@@ -449,16 +453,6 @@ function submitEntry() {
     removeRedBorders();
 
     let checked = true;
-    let imgUrl = null;
-    var file = document.querySelector('input[type=file]')['files'][0];
-    var FR = new FileReader();
-    if (file != undefined) {
-        FR.readAsDataURL(file);
-        FR.addEventListener("load", function(e) {
-            imgUrl = e.target.result;
-        });
-    }
-
     let title = document.getElementById("ftitle");
     if (title.value === "TITLE" || title.value === "" || title.value.length > 50) {
         title.classList.add("false-input");
@@ -547,10 +541,9 @@ function submitEntry() {
             organizer: organizer,
             start: sDate + "T" + sTime,
             end: eDate + "T" + eTime,
-            status: document.getElementById("fstatus").value,
+            status: document.getElementById("fstatus").selectedIndex,
             allday: checkBox,
             webpage: website,
-            imagedata: imgUrl,
             categories: cats,
             extra: document.getElementById("fsummary").value
         }
@@ -607,35 +600,6 @@ function loadCategorysFromDataBase() {
     request.open("GET", "http://localhost:3000/categories", true);
     request.send();
 }
-
-function checkImgSize(imgUrl, docImg) {
-    let img = new Image();
-    img.src = imgUrl;
-    img.onload = function() {
-        if (this.height <= 200){
-            docImg.style.height = this.height;
-        }else {
-            docImg.style.height = "200px";
-        }
-        if (this.width <= 440){
-            docImg.style.width = this.width;
-        }else {
-            docImg.style.width = "440px";
-        }
-    };
-}
-
-$('#fpicture').change(function() {
-    var file = document.querySelector('input[type=file]')['files'][0];
-    let docImg = document.getElementById("fimg");
-    var FR = new FileReader();
-    FR.addEventListener("load", function(e) {
-        let imgUrl = e.target.result;
-        checkImgSize(imgUrl, docImg);
-        docImg.style.backgroundImage = "url('" + imgUrl + "')";
-    });
-    FR.readAsDataURL(file);
-});
 
 window.onkeydown = function(event) {
     if (event.keyCode === 27) {

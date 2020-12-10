@@ -150,5 +150,6 @@ function addUserToGroup() {
     let selected = document.getElementById("sGroups").selectedIndex;
     selected++
 
-    listAllUsersInGroup()
+    location.reload();
+    listAllUsersInGroup();
 }

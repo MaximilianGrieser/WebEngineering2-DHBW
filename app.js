@@ -72,7 +72,7 @@ function createUsers(){
 }
 
 function createEvents(){
-    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID INT(255), title VARCHAR(255) NOT NULL, location VARCHAR(255), organizer VARCHAR(255) NOT NULL, start VARCHAR(255) NOT NULL, end VARCHAR(255) NOT NULL, statusId VARCHAR(255), allday BOOLEAN, webpage VARCHAR(255), imagedata VARCHAR(255), extra VARCHAR(1020))", function(err) {
+    con.query("CREATE TABLE events(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID INT(255), title VARCHAR(255) NOT NULL, location VARCHAR(255), organizer VARCHAR(255) NOT NULL, start VARCHAR(255) NOT NULL, end VARCHAR(255) NOT NULL, statusId VARCHAR(255), allday BOOLEAN, webpage VARCHAR(255), extra VARCHAR(1020))", function(err) {
         if(err) throw err
         console.log("Created Table Events");
     });
@@ -96,6 +96,10 @@ function createCategories(){
     con.query("CREATE TABLE categories(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL)", function(err) {
         if(err) throw err
         console.log("Created Table Categories");
+    });
+    con.query("INSERT INTO categories (name) VALUES ('none'), ('private'), ('business'), ('school'), ('holiday')", function(err) {
+        if(err) throw err
+        console.log("Filled Table Categories");
     });
 }
 
@@ -139,7 +143,7 @@ app.get("/users/:id/:field", jsonParser, (req, res) => {
 // ID atribute und all day muss extra gehandelt werden.
 app.post("/events", jsonParser, (req, res) => {
     let eventID;
-    con.query("INSERT INTO events(userID, title, location, organizer, start, end, statusId, allday, webpage, imagedata, extra) VALUES('"+ req.body.userID + "','" + req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + 1 + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.imagedata + "','" + req.body.extra +"')", function(err, result) {
+    con.query("INSERT INTO events(userID, title, location, organizer, start, end, statusId, allday, webpage, extra) VALUES('"+ req.body.userID + "','" + req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + req.body.status + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.extra +"')", function(err, result) {
         if(err) throw err;
         console.log("Event added");
         console.log(req.body.categories[0]);
@@ -246,4 +250,13 @@ app.delete("/categories/:id", jsonParser, (req, res) => {
     })
 })
 
+app.get("/eventcategories/:eventid",jsonParser, (req, res) => {
+    con.query("SELECT * FROM eventcategories WHERE eventID = '" + req.params.eventid + "'", function(err, ress){
+        if(err) throw err
+        console.log("EventID requested, " +req.params.eventid)
+        res.json(ress)
+    })
+})
+
 app.listen(port, () => console.log('Calender App listening on port ' + port + '!'))
+
