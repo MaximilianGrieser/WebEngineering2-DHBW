@@ -27,7 +27,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/navbar/navbar.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,7 @@
       <workItem from="1607433471266" duration="7258000" />
       <workItem from="1607602292024" duration="7529000" />
       <workItem from="1607675941062" duration="3086000" />
-      <workItem from="1607685169486" duration="2224000" />
+      <workItem from="1607685169486" duration="3186000" />
     </task>
     <task id="LOCAL-00001" summary="Liste abgearbeitet">
       <created>1607608143865</created>
@@ -94,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607685625363</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="buttons work">
+      <created>1607688768983</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607688768984</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,17 +137,18 @@
     <MESSAGE value="Liste abgearbeitet" />
     <MESSAGE value="Links Navbar" />
     <MESSAGE value="new structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="new structure" />
+    <MESSAGE value="buttons work" />
+    <option name="LAST_COMMIT_MESSAGE" value="buttons work" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1607675999070">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1607675999070" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1607685643373">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1607688775159">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1607685643373" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1607688775159" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1607610042109" />
     <state x="91" y="24" key="new project wizard" timestamp="1607608372501">
       <screen x="0" y="0" width="1280" height="680" />
