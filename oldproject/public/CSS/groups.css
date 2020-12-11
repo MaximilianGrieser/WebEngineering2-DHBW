@@ -1,0 +1,36 @@
+div.navbar {
+    font-size: large;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    padding: .5em 1em;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+    background-color: #c488e3;
+}
+
+a:active {
+    color: black;
+}
+
+div.content {
+    margin: 4em;
+}
+
+select.form-control {
+    width: 15em;
+    height: 15em;
+}

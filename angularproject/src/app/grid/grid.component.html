@@ -1,0 +1,83 @@
+<div class="calender">
+  <div class="month">
+    <button class="prev-month button-month" onclick="prevMonth()">
+      <svg class="bi bi-chevron-compact-left" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
+      </svg>
+    </button>
+    <button class="next-month button-month" onclick="nextMonth()">
+      <svg class="bi bi-chevron-compact-right" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
+      </svg>
+    </button>
+    <p class="month-header" id="currMonth">Month</p>
+  </div>
+
+  <div class="days">
+    <table class="days_table">
+      <tr>
+        <th id="weekday0">SUNDAY</th>
+        <th id="weekday1">MONDAY</th>
+        <th id="weekday2">TUESDAY</th>
+        <th id="weekday3">WEDNESDAY</th>
+        <th id="weekday4">THURSDAY</th>
+        <th id="weekday5">FRIDAY</th>
+        <th id="weekday6">SATURDAY</th>
+      </tr>
+      <tr class="days-row0">
+        <td id="weekday_days_0_row_0" onclick="listAppointments(0,0)">X</td>
+        <td id="weekday_days_1_row_0" onclick="listAppointments(0,1)">X</td>
+        <td id="weekday_days_2_row_0" onclick="listAppointments(0,2)">X</td>
+        <td id="weekday_days_3_row_0" onclick="listAppointments(0,3)">X</td>
+        <td id="weekday_days_4_row_0" onclick="listAppointments(0,4)">X</td>
+        <td id="weekday_days_5_row_0" onclick="listAppointments(0,5)">X</td>
+        <td id="weekday_days_6_row_0" onclick="listAppointments(0,6)">X</td>
+      </tr>
+      <tr class="days-row1">
+        <td id="weekday_days_0_row_1" onclick="listAppointments(1,0)">X</td>
+        <td id="weekday_days_1_row_1" onclick="listAppointments(1,1)">X</td>
+        <td id="weekday_days_2_row_1" onclick="listAppointments(1,2)">X</td>
+        <td id="weekday_days_3_row_1" onclick="listAppointments(1,3)">X</td>
+        <td id="weekday_days_4_row_1" onclick="listAppointments(1,4)">X</td>
+        <td id="weekday_days_5_row_1" onclick="listAppointments(1,5)">X</td>
+        <td id="weekday_days_6_row_1" onclick="listAppointments(1,6)">X</td>
+      </tr>
+      <tr class="days-row2">
+        <td id="weekday_days_0_row_2" onclick="listAppointments(2,0)">X</td>
+        <td id="weekday_days_1_row_2" onclick="listAppointments(2,1)">X</td>
+        <td id="weekday_days_2_row_2" onclick="listAppointments(2,2)">X</td>
+        <td id="weekday_days_3_row_2" onclick="listAppointments(2,3)">X</td>
+        <td id="weekday_days_4_row_2" onclick="listAppointments(2,4)">X</td>
+        <td id="weekday_days_5_row_2" onclick="listAppointments(2,5)">X</td>
+        <td id="weekday_days_6_row_2" onclick="listAppointments(2,6)">X</td>
+      </tr>
+      <tr class="days-row3">
+        <td id="weekday_days_0_row_3" onclick="listAppointments(3,0)">X</td>
+        <td id="weekday_days_1_row_3" onclick="listAppointments(3,1)">X</td>
+        <td id="weekday_days_2_row_3" onclick="listAppointments(3,2)">X</td>
+        <td id="weekday_days_3_row_3" onclick="listAppointments(3,3)">X</td>
+        <td id="weekday_days_4_row_3" onclick="listAppointments(3,4)">X</td>
+        <td id="weekday_days_5_row_3" onclick="listAppointments(3,5)">X</td>
+        <td id="weekday_days_6_row_3" onclick="listAppointments(3,6)">X</td>
+      </tr>
+      <tr class="days-row4">
+        <td id="weekday_days_0_row_4" onclick="listAppointments(4,0)">X</td>
+        <td id="weekday_days_1_row_4" onclick="listAppointments(4,1)">X</td>
+        <td id="weekday_days_2_row_4" onclick="listAppointments(4,2)">X</td>
+        <td id="weekday_days_3_row_4" onclick="listAppointments(4,3)">X</td>
+        <td id="weekday_days_4_row_4" onclick="listAppointments(4,4)">X</td>
+        <td id="weekday_days_5_row_4" onclick="listAppointments(4,5)">X</td>
+        <td id="weekday_days_6_row_4" onclick="listAppointments(4,6)">X</td>
+      </tr>
+      <tr class="days-row5">
+        <td id="weekday_days_0_row_5" onclick="listAppointments(5,0)">X</td>
+        <td id="weekday_days_1_row_5" onclick="listAppointments(5,1)">X</td>
+        <td id="weekday_days_2_row_5" onclick="listAppointments(5,2)">X</td>
+        <td id="weekday_days_3_row_5" onclick="listAppointments(5,3)">X</td>
+        <td id="weekday_days_4_row_5" onclick="listAppointments(5,4)">X</td>
+        <td id="weekday_days_5_row_5" onclick="listAppointments(5,5)">X</td>
+        <td id="weekday_days_6_row_5" onclick="listAppointments(5,6)">X</td>
+      </tr>
+    </table>
+  </div>
+</div>
