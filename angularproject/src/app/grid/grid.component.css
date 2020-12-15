@@ -2,13 +2,14 @@ div.month {
   background-color: #c488e3;
   width: 100%;
   height: 10em;
+  position: relative ;
   text-align: center;
   font-weight: bold;
 }
 
 button.button-month {
   position: relative;
-  width: 10em;
+  width: 10%;
   height: inherit;
   background-color: inherit;
   border: none;
@@ -29,8 +30,14 @@ button.next-month {
 }
 
 p.month-header {
-  font-size: 3em;
-  padding-top: 38px;
+  font-size: 2em;
+  width: 100%;
+  margin: 0;
+  margin-right: -50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 }
 
 ul.weekdays {
@@ -42,13 +49,6 @@ ul.weekdays {
 th.weekday-today {
   background-color: #000000;
   color: white;
-}
-
-th {
-  background-color: #666;
-  padding: 10px;
-  text-align: center;
-  height: 4em;
 }
 
 div.days {
@@ -69,6 +69,7 @@ td.day-today {
 }
 
 th {
+  font-size: small;
   background-color: #ecfdf4;
   padding: 10px;
   text-align: center;

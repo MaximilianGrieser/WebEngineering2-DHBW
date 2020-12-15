@@ -1,0 +1,22 @@
+div.content {
+  margin: 4em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+
+div.items {
+  margin: 2%;
+}
+button{
+  margin-top: 3%;
+}
+
+select.form-control {
+  width: 15em;
+  height: 15em;
+}
+

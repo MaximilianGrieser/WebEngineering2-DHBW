@@ -1,0 +1,12 @@
+<div class="content">
+  <label for="scats" id="lcats">ALL CATEGORIES</label>
+  <select multiple class="form-control" id="sCats" ></select>
+
+  <form>
+    <label for="fcatname">NAME</label><br>
+    <input type="text" class="form-control" id="fcatname" name="catname">
+  </form>
+
+  <button type="button" class="btn btn-secondary" id="leftButton" (click)="newCategory()">NEW Category</button>
+  <button type="button" class="btn btn-secondary" (click)="removeCategory()">REMOVE Category</button>
+</div>
