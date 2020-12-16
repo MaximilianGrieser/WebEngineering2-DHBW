@@ -9,6 +9,8 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { GroupsComponent } from './groups/groups.component';
 import { CategoriesComponent } from './categories/categories.component';
 import {FormsModule} from "@angular/forms";
+import { LoginComponent } from './login/login.component';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -17,16 +19,19 @@ import {FormsModule} from "@angular/forms";
     NavbarComponent,
     ImprintComponent,
     GroupsComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {path: 'grid', component: GridComponent},
       {path: 'imprint', component: ImprintComponent},
       {path: 'groups', component: GroupsComponent},
       {path: 'categories', component: CategoriesComponent},
-      {path: '', redirectTo: '/grid', pathMatch: 'full'},
+      {path: 'login', component: LoginComponent},
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
     ]),
     FormsModule,
   ],

@@ -89,3 +89,162 @@ table.days_table td:hover {
   background-color: #000000;
   color: white;
 }
+
+div.new-entry-form {
+  box-shadow: 0 0 15px 0 black;
+  border-radius: 15px;
+  position: relative;
+  display: none;
+  margin: -30px auto;
+  padding: 10px;
+  width: 465px;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+table.new-entry-form {
+  width: 445px;
+}
+
+table.new-entry-form td.new-entry-form-title {
+  padding: 1.2em;
+  text-align: center;
+}
+
+table.new-entry-form td.new-entry-form-title input {
+  width: 20em;
+  height: 2.5em;
+  text-align: center;
+}
+
+table.new-entry-form td.new-entry-form-fullday {
+  padding-left: 8px;
+}
+
+table.new-entry-form td.new-entry-form-fullday input {
+  margin-top: 0.5em;
+  transform: scale(1.8);
+}
+
+svg.new-entry-form-close {
+  position: absolute;
+  top: 0.7em;
+  right: 0.7em;
+}
+
+svg.new-entry-form-close:hover {
+  background: #c488e3;
+}
+
+input.new-entry-form-picture {
+  width: 445px;
+}
+
+select.fstatus {
+  height: 2em;
+  width: 182px;
+}
+
+select.fcategory {
+  height: 2em;
+  width: 182px;
+}
+
+input.new-entry-form-save {
+  height: 2em;
+  width: 182px;
+}
+
+table.new-entry-form td.new-entry-form-save {
+  padding-top: 1em;
+  text-align: center;
+}
+
+.false-input {
+  border: 2px solid red;
+}
+
+div.appointments-at-day {
+  box-shadow: 0 0 15px 0 black;
+  border-radius: 15px;
+  position: relative;
+  display: none;
+  margin: 0 auto;
+  padding: 10px;
+  width: 500px;
+  height: 600px;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+p.appointments-at-day-text {
+  width: 440px;
+  text-align: center;
+  font-size: x-large;
+}
+
+div.appointments-at-day-heading svg {
+  float: right;
+}
+
+div.appointments-at-day svg:hover {
+  background: #c488e3;
+}
+
+div.appointments-at-day-content {
+  padding: 0.5em;
+}
+
+div.appointments-at-day-content-entry {
+  border-radius: 15px;
+  height: 3em;
+  padding-top: 0.7em;
+  padding-left: 0.7em;
+}
+
+div.appointments-at-day-content-entry:hover {
+  cursor: pointer;
+  background-color: #c488e3;
+}
+
+div.selected {
+  background-color: #c488e3;
+}
+
+.blur {
+  filter: blur(4px);
+}
+
+#fsummary {
+  resize: none;
+}
+
+button.add-calender-entry {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  height: 4em;
+  width: 4em;
+  border-radius: 50%;
+  background-color: #d7d7d7;
+  border: none;
+  outline: none;
+  padding: 0;
+  box-shadow: 0 0 15px 0 black;
+}
+
+button.add-calender-entry:hover {
+  background-color: #c488e3;
+}
+
+div.new-entry-form {
+  box-shadow: 0 0 15px 0 black;
+  border-radius: 15px;
+  position: relative;
+  display: none;
+  margin: -30px auto;
+  padding: 10px;
+  width: 465px;
+  color: #ffffff;
+  background-color: #000000;
+}

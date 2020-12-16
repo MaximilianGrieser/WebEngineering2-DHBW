@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const { request } = require('express');
 const jsonParser = bodyParser.json();
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var con = mysql.createConnection({

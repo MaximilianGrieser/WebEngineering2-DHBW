@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SessionService} from "../session.service";
+import {ApiService} from "../api.service";
+import $ from "jquery";
 
 const today = new Date();
 const todayDate = today.getDate();
@@ -10,13 +13,13 @@ const currentDate = today.getDate();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 
-const openDate = today.getDate();
+let openDate: any = today.getDate();
 
-const selectedId = -1;
-const selectedRow = -1;
-const selectedCell = -1;
+let selectedId = -1;
+let selectedRow = -1;
+let selectedCell = -1;
 
-const counter = 0;
+let counter = 0;
 
 const months = ['JANNUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
 const options = [];
@@ -28,7 +31,7 @@ const daysGrid = [
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
   ['X', 'X', 'X', 'X', 'X', 'X', 'X']
 ];
-const appointmentsGrid = [
+let appointmentsGrid: any = [
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
@@ -38,10 +41,8 @@ const appointmentsGrid = [
 ];
 let appointmentsList;
 
-const isNewEntry = true;
+let isNewEntry = true;
 const firstLoad = true;
-// tslint:disable-next-line:prefer-const
-let currentUser;
 
 @Component({
   selector: 'app-grid',
@@ -51,31 +52,26 @@ let currentUser;
 
 export class GridComponent implements OnInit {
 
-  constructor() {  }
+
+  constructor(private session: SessionService, private api: ApiService) {
+  }
 
   ngOnInit(): void {
+    console.log(this.session.getUser());
     this.loadAppointmentsFromDataBase();
+
   }
-  loadAppointmentsFromDataBase(): void{
-    const request = new XMLHttpRequest();
 
-    request.onreadystatechange = function(): void {
-      if (this.readyState === 4 && this.status === 200) {
-        appointmentsList = JSON.parse(this.responseText);
-        console.log('Read Apponitmens:');
-        console.log(appointmentsList);
-      }
-    };
-    /*
-    request.open('GET', 'http://localhost:3000/events/' + currentUser, false);
-    console.log('http://localhost:3000/events/' + currentUser);
-    request.send();
+  loadAppointmentsFromDataBase(): void {
+    this.api.getEvents(this.session.getUser()).subscribe((data) => {
+      appointmentsList = data;
+      console.log(appointmentsList);
+      this.showCalendar(currentMonth, currentYear);
+    });
 
-     */
-
-    this.showCalendar(currentMonth, currentYear);
   }
-    showCalendar(month, year): void {
+
+  showCalendar(month, year): void {
     const firstDay = ((new Date(year, month)).getDay());
     const daysInMonth = 32 - new Date(year, month, 32).getDate();
     const daysInPrevMonth = 32 - new Date(year, month - 1, 32).getDate();
@@ -119,14 +115,13 @@ export class GridComponent implements OnInit {
           if (year === todayYear && month === todayMonth && date === todayDate) {
             document.getElementById('weekday_days_' + j + '_row_' + i).classList.add('day-today');
           }
-          /*
+
           const appointmentsAtDayList = this.appointmentsAtDay(year, month, date);
           if (appointmentsAtDayList.length > 0) {
-            // @ts-ignore
             appointmentsGrid[i][j] = appointmentsAtDayList;
+
           }
 
-           */
         }
         date++;
       }
@@ -145,9 +140,9 @@ export class GridComponent implements OnInit {
         currElement.innerHTML = daysGrid[i][y];
         if (appointmentsGrid[i][y] !== 'X') {
           let entrys = 0;
-          appointmentsGrid.forEach(appointment => {
+          appointmentsGrid[i][y].forEach(appointment => {
             if (entrys <= 2) {
-              // currElement.innerHTML += '<br>' + appointment.title.substr(0, 12);
+              currElement.innerHTML += '<br>' + appointment.title;
               entrys++;
             }
           });
@@ -155,7 +150,8 @@ export class GridComponent implements OnInit {
       }
     }
   }
-/*
+
+
   appointmentsAtDay(year, month, date): object[] {
     const filterString = new Date(year, month, date + 1).toISOString().slice(0, 10);
     const appointmentsAtDayList = [];
@@ -168,7 +164,6 @@ export class GridComponent implements OnInit {
   }
 
 
- */
   clearGrid(): void {
     for (let i = 0; i < 6; i++) {
       for (let y = 0; y < 7; y++) {
@@ -192,4 +187,364 @@ export class GridComponent implements OnInit {
     this.showCalendar(currentMonth, currentYear);
   }
 
+  listAppointments(row, cell) {
+    if (document.getElementById("weekday_days_" + cell + "_row_" + row).classList.contains("day-not-in-month") == false) {
+      selectedRow = row;
+      selectedCell = cell;
+      this.closeNewEntry();
+      this.blurScreenAndButton();
+      document.getElementById("appointments-at-day").style.display = "block";
+
+      document.getElementById("appointments-at-day-text").innerHTML = "APPOINTMENTS AT " + months[currentMonth] + " " + daysGrid[row][cell] + " " + currentYear + ":"
+      openDate = daysGrid[row][cell];
+
+      let list = document.getElementById("appointments-at-day-content");
+      while (list.firstChild) {
+        list.removeChild(list.firstChild);
+      }
+
+      if (appointmentsGrid[row][cell] != "X") {
+        appointmentsGrid[row][cell].sort((a, b) => parseInt(a.start.slice(11)) - parseInt(b.start.slice(11)));
+        let idx = 0;
+        appointmentsGrid[row][cell].forEach(appointment => {
+          let text = appointment.start.slice(11) + " : " + appointment.title;
+          let item = document.createElement("div");
+          item.innerHTML = text;
+          item.classList.add("appointments-at-day-content-entry");
+          item.id = "appointments-at-day-content-entry-" + idx;
+          list.appendChild(item);
+          idx++;
+        })
+
+        $(".appointments-at-day-content-entry").on("click", function () {
+          $(".appointments-at-day-content>div.selected").removeClass("selected");
+          this.classList.add("selected");
+          selectedId = parseInt(this.id.slice(34, 35));
+        });
+
+        $(".bi-pencil-square").on("click", function () {
+          if (selectedId == -1) {
+            alert("Bitte wähle einen Termin aus!")
+          } else {
+            document.getElementById("table-select-td").innerHTML = "";
+            let counter = 0;
+            this.addMoreCategorys();
+            this.isNewEntry = false;
+            let currAppointment = appointmentsGrid[row][cell][selectedId];
+            (<HTMLInputElement>document.getElementById("ftitle")).value = currAppointment.title;
+            (<HTMLInputElement>document.getElementById("fstartdate")).value = currAppointment.start.slice(0, 10)
+            (<HTMLInputElement>document.getElementById("fstarttime")).value = currAppointment.start.slice(11);
+            (<HTMLInputElement>document.getElementById("fganztag")).checked = currAppointment.allday;
+            if (!currAppointment.allday) {
+              (<HTMLInputElement>document.getElementById("fenddate")).value = currAppointment.end.slice(0, 10);
+              (<HTMLInputElement>document.getElementById("fendtime")).value = currAppointment.end.slice(11);
+            } else {
+              this.hideDateEnd();
+            }
+            (<HTMLInputElement>document.getElementById("fsummary")).value = currAppointment.extra;
+            (<HTMLInputElement>document.getElementById("femail")).value = currAppointment.organizer;
+            (<HTMLSelectElement>document.getElementById("fstatus")).selectedIndex = currAppointment.status;
+            (<HTMLInputElement>document.getElementById("fhomepage")).value = currAppointment.webpage;
+            (<HTMLInputElement>document.getElementById("flocation")).value = currAppointment.location;
+
+            let request = new XMLHttpRequest();
+            let categories = [];
+            request.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                categories = JSON.parse(this.responseText);
+                console.log(this.responseText);
+              }
+            }
+            request.open("GET", "http://localhost:3000/eventcategories/" + currAppointment.id, false);
+            request.send();
+
+            if (categories.length == 1) {
+              (<HTMLInputElement>document.getElementById("fcategory-0")).value = categories[0].name;
+            } else {
+              let doc = document.getElementById("table-select-td");
+              for (let i = 1; i < categories.length; i++) {
+                let newSelect = document.createElement("select");
+                options.forEach(option => {
+                  this.newOption = document.createElement("option")
+                  this.newOption.text = option.name;
+                  newSelect.add(this.newOption);
+                });
+                newSelect.id = "fcategory-" + i;
+                newSelect.classList.add("fcategory");
+                newSelect.value = categories[i].name;
+                doc.append(newSelect);
+              }
+            }
+
+            this.newEntry();
+          }
+        });
+
+        $(".bi-dash-square").on("click", function () {
+          if (selectedId == -1) {
+            alert("Bitte wähle einen Termin aus!");
+          } else {
+            if (confirm('Sicher löschen ?')) {
+              this.api.deleteEvent(appointmentsGrid[row][cell][selectedId].id).subscribe(() => {
+                alert("Erfolgreich geloescht.")
+              });
+
+              this.loadAppointmentsFromDataBase();
+              this.showCalendar(currentMonth, currentYear);
+              this.listAppointments(row, cell);
+              location.reload();
+            }
+          }
+        });
+      }
+    }
+  }
+
+  closeNewEntry() {
+    this.removeRedBorders();
+    if ((<HTMLInputElement>document.getElementById("fganztag")).checked == true) {
+      this.hideDateEnd();
+    }
+    this.resetInputFields();
+
+    let newEntry = document.getElementById("new-entry-form");
+    if (newEntry.style.display === "block") {
+      newEntry.style.display = "none";
+      this.removeBlurScreenAndButton();
+    }
+  }
+
+  blurScreenAndButton() {
+    document.getElementById("calender").classList.add("blur");
+    document.getElementById("calender").style.pointerEvents = "none";
+    //document.getElementById("add-callender-entry")).classList.add("blur");
+    //HTMLDivElement>document.getElementById("add-callender-entry")).style.pointerEvents = "none";
+  }
+
+  removeBlurScreenAndButton() {
+    document.getElementById("calender").classList.remove("blur");
+    document.getElementById("calender").style.pointerEvents = "";
+    // document.getElementById("add-callender-entry").classList.remove("blur");
+    // document.getElementById("add-callender-entry").style.pointerEvents = "";
+  }
+
+  resetInputFields() {
+    (<HTMLInputElement>document.getElementById("ftitle")).value = "TITLE";
+    (<HTMLInputElement>document.getElementById("fstartdate")).value = new Date(currentYear, currentMonth, openDate + 1).toISOString().slice(0, 10);
+    (<HTMLInputElement>document.getElementById("fstarttime")).value = "";
+    (<HTMLInputElement>document.getElementById("fganztag")).checked = false;
+    (<HTMLInputElement>document.getElementById("fenddate")).value = "";
+    (<HTMLInputElement>document.getElementById("fendtime")).value = "";
+    (<HTMLInputElement>document.getElementById("fsummary")).value = "SUMMARY";
+    (<HTMLInputElement>document.getElementById("femail")).value = "organizer@example.de";
+    (<HTMLInputElement>document.getElementById("fstatus")).value = "Busy";
+    (<HTMLInputElement>document.getElementById("fhomepage")).value = "";
+    (<HTMLInputElement>document.getElementById("flocation")).value = "";
+    (<HTMLElement>document.getElementById("table-select-td")).innerHTML = "";
+    counter = 0;
+  }
+
+  hideDateEnd() {
+    let objekt_text = document.getElementById("endDate-text").classList;
+    let objekt_date = document.getElementById("endDate-date").classList;
+    let objekt_time = document.getElementById("endDate-time").classList;
+    if (objekt_text.contains("blur")) {
+      objekt_text.remove("blur")
+      objekt_date.remove("blur")
+      objekt_time.remove("blur")
+    } else {
+      objekt_text.add("blur")
+      objekt_date.add("blur")
+      objekt_time.add("blur")
+    }
+  }
+
+  removeRedBorders() {
+    document.getElementById("ftitle").classList.remove("false-input");
+    document.getElementById("fstartdate").classList.remove("false-input");
+    document.getElementById("fstarttime").classList.remove("false-input");
+    document.getElementById("fenddate").classList.remove("false-input");
+    document.getElementById("fendtime").classList.remove("false-input");
+    document.getElementById("femail").classList.remove("false-input");
+  }
+
+  addMoreCategorys() {
+    let doc = document.getElementById("table-select-td");
+    if (doc.children.length >= options.length) {
+      alert("Unmöglich mehr Kategorien anzugeben als Existieren")
+    } else {
+      let newSelect = document.createElement("select");
+      options.forEach(option => {
+        let newOption = document.createElement("option")
+        newOption.text = option.name;
+        newSelect.add(newOption);
+      });
+      newSelect.id = "fcategory-" + counter;
+      counter++;
+      newSelect.classList.add("fcategory");
+      doc.append(newSelect);
+    }
+  }
+
+  submitEntry() {
+    this.removeRedBorders();
+
+    let checked = true;
+    let title = document.getElementById("ftitle") as HTMLInputElement;
+    let titleValue
+    if (title.value === "TITLE" || title.value === "" || title.value.length > 50) {
+      title.classList.add("false-input");
+      checked = false;
+    } else {
+      titleValue = title.value;
+    }
+
+    let sDate = document.getElementById("fstartdate") as HTMLInputElement;
+    let sDateValue;
+    if (sDate.value === "") {
+      sDate.classList.add("false-input");
+      checked = false;
+    } else {
+      sDateValue = sDate.value.slice(0, 10);
+    }
+
+    let checkBox = (document.getElementById("fganztag") as HTMLInputElement).checked;
+    let sTime
+    let eTime;
+    let eDate;
+    if (checkBox) {
+      sTime = "00:00";
+      eTime = "23:59";
+      eDate = sDate;
+    } else {
+      sTime = document.getElementById("fstarttime");
+      if (sTime.value === "") {
+        sTime.classList.add("false-input");
+        checked = false;
+      } else {
+        sTime = sTime.value.slice(0, 5);
+      }
+
+      eDate = document.getElementById("fenddate");
+      if (eDate.value === "") {
+        eDate.classList.add("false-input");
+        checked = false;
+      } else {
+        eDate = eDate.value.slice(0, 10);
+      }
+
+      eTime = document.getElementById("fendtime");
+      if (eTime.value === "") {
+        eTime.classList.add("false-input");
+        checked = false;
+      } else {
+        eTime = eTime.value.slice(0, 5);
+      }
+    }
+
+    let organizer = document.getElementById("femail") as HTMLInputElement;
+    let organizerValue;
+    if (organizer.value === "" || organizer.value.length > 50) {
+      organizer.classList.add("false-input");
+      checked = false;
+    } else {
+      organizerValue = organizer.value;
+    }
+
+    let location = document.getElementById("flocation") as HTMLInputElement;
+    let locationValue;
+    if (location.value.length > 50) {
+      location.classList.add("false-input");
+      checked = false;
+    } else {
+      locationValue = location.value;
+    }
+
+    let website = document.getElementById("fhomepage") as HTMLInputElement;
+    let websiteValue;
+    if (website.value.length > 100) {
+      website.classList.add("false-input");
+      checked = false;
+    } else {
+      websiteValue = website.value;
+    }
+
+    let cats = [];
+    let selects = document.getElementsByClassName("fcategory");
+    for (var i = 0, len = selects.length; i < len; i++) {
+      cats.push(options[(<HTMLSelectElement>selects[i]).selectedIndex]);
+    }
+
+    if(checked) {    setTimeout(() => {
+      let entry = {
+        userID: this.session.getUser(),
+        title: title,
+        location: location,
+        organizer: organizer,
+        start: sDate + "T" + sTime,
+        end: eDate + "T" + eTime,
+        status: (<HTMLSelectElement>document.getElementById("fstatus")).selectedIndex,
+        allday: checkBox,
+        webpage: website,
+        categories: cats,
+        extra: (<HTMLInputElement>document.getElementById("fsummary")).value
+      }
+
+      let request = new XMLHttpRequest();
+
+      request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          alert("Event erfolgreich geadded");
+          console.log(this.responseText);
+          window.location.reload();
+        }
+      }
+
+      if (isNewEntry) {
+        request.open("POST", "http://localhost:3000/events", true);
+      } else {
+        console.log(selectedRow, selectedCell, selectedId);
+        console.log(appointmentsGrid[selectedRow][selectedCell][selectedId].id);
+        request.open("PUT", "http://dhbw.radicalsimplicity.com/calendar/2319319/events/" + appointmentsGrid[selectedRow][selectedCell][selectedId].id, true);
+      }
+      console.log(JSON.stringify(entry));
+      request.setRequestHeader("Content-Type", "application/json");
+      request.send(JSON.stringify(entry));
+
+      this.closeNewEntry();
+      this.loadAppointmentsFromDataBase();
+    }, 300);}
+  }
+
+  closeListAppointments() {
+    let listAppointment = document.getElementById("appointments-at-day");
+    if (listAppointment.style.display === "block") {
+      listAppointment.style.display = "none";
+      this.removeBlurScreenAndButton();
+    }
+  }
+
+  newEntryIcon() {
+    isNewEntry = true;
+    this.addMoreCategorys();
+    this.newEntry();
+  }
+
+  newEntry() {
+    this.closeListAppointments();
+
+    let today = new Date(currentYear, currentMonth, openDate + 1).toISOString().slice(0, 10);
+    (<HTMLInputElement>document.getElementById("fstartdate")).value = today;
+
+    this.blurScreenAndButton();
+
+    document.getElementById("new-entry-form").style.display = "block";
+  }
+
+  newEntryBtn() {
+    openDate = todayDate;
+    isNewEntry = true;
+    this.addMoreCategorys();
+    this.newEntry();
+  }
 }

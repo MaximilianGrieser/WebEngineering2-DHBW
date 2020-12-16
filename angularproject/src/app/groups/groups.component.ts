@@ -167,7 +167,7 @@ export class GroupsComponent implements OnInit {
     selected++
 
     location.reload();
-    this.listAllUsersInGroup();
+    // this.listAllUsersInGroup();
   }
 
 

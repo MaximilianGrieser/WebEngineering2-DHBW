@@ -3,6 +3,10 @@ div.impressum {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  padding: 5em;
+  padding: 2.5%;
   background: #dddddd;
+}
+
+a.mail{
+  word-wrap: break-word;
 }
