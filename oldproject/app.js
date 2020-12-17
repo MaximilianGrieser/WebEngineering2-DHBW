@@ -7,7 +7,13 @@ const bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const { request } = require('express');
 const jsonParser = bodyParser.json();
-const cors = require('cors');
+const cors = require('cors')
+
+
+const server = app.listen(4000, function(){
+    console.log("API en cours d'exécution sur le port 3000");
+});
+module.exports = server;
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,12 +56,12 @@ function checkIfTablesExists() {
         });
         console.log("Existing Tables found: " + tables);
 
-        if(tables.indexOf("users") == -1) createUsers();
-        if(tables.indexOf("events") == -1) createEvents();
-        if(tables.indexOf("groups") == -1) createGroups();
-        if(tables.indexOf("categories") == -1) createCategories();
-        if(tables.indexOf("usergroup") == -1) createUserGroup();
-        if(tables.indexOf("eventcategories") == -1) createEventCategories();
+        if(tables.indexOf("users") === -1) createUsers();
+        if(tables.indexOf("events") === -1) createEvents();
+        if(tables.indexOf("groups") === -1) createGroups();
+        if(tables.indexOf("categories") === -1) createCategories();
+        if(tables.indexOf("usergroup") === -1) createUserGroup();
+        if(tables.indexOf("eventcategories") === -1) createEventCategories();
     });
 }
 
@@ -111,6 +117,7 @@ function createEventCategories(){
         console.log("Created Table Event-Categories");
     });
 }
+
 
 
 app.post("/users", jsonParser, (req, res) => {
