@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
         this.session.setUser(data[0].id);
         console.log("Login Succesfull " + data[0].id);
         this.router.navigateByUrl('/grid');
+      }else{
+        alert("Falsches Password oder UserID")
       }
     });
 
