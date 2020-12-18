@@ -23,6 +23,7 @@ let counter = 0;
 
 const months = ['JANNUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
 const options = [];
+let groups: any = [];
 const daysGrid = [
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
   ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
@@ -214,30 +215,30 @@ export class GridComponent implements OnInit {
           idx++;
         })
 
-        $(".appointments-at-day-content-entry").on("click", function () {
-          $(".appointments-at-day-content>div.selected").removeClass("selected");
-          this.classList.add("selected");
-          selectedId = parseInt(this.id.slice(34, 35));
+        let self = this;
+
+        $(".appointments-at-day-content-entry").hover(function () {
+          $(this).css({"background-color": "#c488e3", "cursor": 'pointer'});
+        }, function () {
+          $(this).css("background-color", "black");
         });
 
-        $(".bi-pencil-square").on("click", function () {
-          if (selectedId == -1) {
-            alert("Bitte wähle einen Termin aus!")
-          } else {
+        $(".appointments-at-day-content-entry").on("click", function () {
+            selectedId = parseInt(this.id.slice(34, 35));
             document.getElementById("table-select-td").innerHTML = "";
             let counter = 0;
-            this.addMoreCategorys();
+            self.addMoreCategorys();
             this.isNewEntry = false;
             let currAppointment = appointmentsGrid[row][cell][selectedId];
             (<HTMLInputElement>document.getElementById("ftitle")).value = currAppointment.title;
-            (<HTMLInputElement>document.getElementById("fstartdate")).value = currAppointment.start.slice(0, 10)
+            (<HTMLInputElement>document.getElementById("fstartdate")).value = currAppointment.start.slice(0, 10);
             (<HTMLInputElement>document.getElementById("fstarttime")).value = currAppointment.start.slice(11);
             (<HTMLInputElement>document.getElementById("fganztag")).checked = currAppointment.allday;
             if (!currAppointment.allday) {
               (<HTMLInputElement>document.getElementById("fenddate")).value = currAppointment.end.slice(0, 10);
               (<HTMLInputElement>document.getElementById("fendtime")).value = currAppointment.end.slice(11);
             } else {
-              this.hideDateEnd();
+              self.hideDateEnd();
             }
             (<HTMLInputElement>document.getElementById("fsummary")).value = currAppointment.extra;
             (<HTMLInputElement>document.getElementById("femail")).value = currAppointment.organizer;
@@ -245,52 +246,60 @@ export class GridComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("fhomepage")).value = currAppointment.webpage;
             (<HTMLInputElement>document.getElementById("flocation")).value = currAppointment.location;
 
-            let categories = [];
-            this.api.getEventCategories(currAppointment.id).subscribe((data) => {
+            self.loadGroups();
+
+            let categories: any = [];
+            self.api.getEventCategories(currAppointment.id).subscribe((data) => {
               categories = data;
-              console.log(this.responseText);
+              if (categories.length == 1) {
+                (<HTMLInputElement>document.getElementById("fcategory-0")).value = categories[0].name;
+              } else {
+                let doc = document.getElementById("table-select-td");
+                for (let i = 1; i < categories.length; i++) {
+                  let newSelect = document.createElement("select");
+                  options.forEach(option => {
+                    this.newOption = document.createElement("option")
+                    this.newOption.text = option.name;
+                    newSelect.add(this.newOption);
+                  });
+                  newSelect.id = "fcategory-" + i;
+                  newSelect.classList.add("fcategory");
+                  newSelect.value = categories[i].name;
+                  doc.append(newSelect);
+                }
+              }
+            });
+            self.newEntry();
+          }
+        );
+
+        $(".delete-btn").on("click", function () {
+          if (confirm('Sicher löschen ?')) {
+            console.log(appointmentsGrid[row][cell][selectedId].id)
+            self.api.deleteEvent(appointmentsGrid[row][cell][selectedId].id).subscribe(() => {
+              alert("Erfolgreich geloescht.")
             });
 
-            if (categories.length == 1) {
-              (<HTMLInputElement>document.getElementById("fcategory-0")).value = categories[0].name;
-            } else {
-              let doc = document.getElementById("table-select-td");
-              for (let i = 1; i < categories.length; i++) {
-                let newSelect = document.createElement("select");
-                options.forEach(option => {
-                  this.newOption = document.createElement("option")
-                  this.newOption.text = option.name;
-                  newSelect.add(this.newOption);
-                });
-                newSelect.id = "fcategory-" + i;
-                newSelect.classList.add("fcategory");
-                newSelect.value = categories[i].name;
-                doc.append(newSelect);
-              }
-            }
-
-            this.newEntry();
-          }
-        });
-
-        $(".bi-dash-square").on("click", function () {
-          if (selectedId == -1) {
-            alert("Bitte wähle einen Termin aus!");
-          } else {
-            if (confirm('Sicher löschen ?')) {
-              this.api.deleteEvent(appointmentsGrid[row][cell][selectedId].id).subscribe(() => {
-                alert("Erfolgreich geloescht.")
-              });
-
-              this.loadAppointmentsFromDataBase();
-              this.showCalendar(currentMonth, currentYear);
-              this.listAppointments(row, cell);
-              location.reload();
-            }
+            self.loadAppointmentsFromDataBase();
+            self.showCalendar(currentMonth, currentYear);
+            self.listAppointments(row, cell);
+            location.reload();
           }
         });
       }
     }
+  }
+
+  loadGroups() {
+    this.api.getGroups().subscribe((data) => {
+      groups = data;
+      let select = document.getElementById("fgroup") as HTMLSelectElement;
+      for (let i = 0; i < groups.length; i++) {
+        let newOption = document.createElement("option");
+        newOption.text = groups[i].name;
+        select.add(newOption);
+      }
+    })
   }
 
   closeNewEntry() {
@@ -472,36 +481,42 @@ export class GridComponent implements OnInit {
     }
 
     if (checked) {
-      let entry = {
-        userID: this.session.getUser(),
-        title: titleValue,
-        location: locationValue,
-        organizer: organizerValue,
-        start: sDateValue + "T" + sTime,
-        end: eDateValue + "T" + eTime,
-        status: (<HTMLSelectElement>document.getElementById("fstatus")).selectedIndex,
-        allday: checkBox,
-        webpage: websiteValue,
-        categories: cats,
-        extra: (<HTMLInputElement>document.getElementById("fsummary")).value
-      }
 
-      if (isNewEntry) {
-        this.api.postEvent(entry).subscribe((data) => {
-          alert("Event erfolgreich geadded");
-          console.log(data);
-          window.location.reload();
-        });
-      } else {
-        this.api.putEvent(appointmentsGrid[selectedRow][selectedCell][selectedId].id, entry).subscribe((data) => {
-          alert("Event erfolgreich geupdated");
-          console.log(data);
-          window.location.reload();
-        });
-      }
+      let group = (document.getElementById("fgroup") as HTMLSelectElement).value;
+      group = groups.find(x => x.name === group).id;
+      this.api.getUserGroup(+group).subscribe((data) => {
+        data.forEach(user => {
+          let entry = {
+            userID: user.userID,
+            title: titleValue,
+            location: locationValue,
+            organizer: organizerValue,
+            start: sDateValue + "T" + sTime,
+            end: eDateValue + "T" + eTime,
+            status: (<HTMLSelectElement>document.getElementById("fstatus")).selectedIndex,
+            allday: checkBox,
+            webpage: websiteValue,
+            categories: cats,
+            extra: (<HTMLInputElement>document.getElementById("fsummary")).value
+          }
 
-      this.closeNewEntry();
-      this.loadAppointmentsFromDataBase();
+          if (isNewEntry) {
+            this.api.postEvent(entry).subscribe((data) => {
+              alert("Event erfolgreich geadded");
+              console.log(data);
+            });
+          } else {
+            this.api.putEvent(appointmentsGrid[selectedRow][selectedCell][selectedId].id, entry).subscribe((data) => {
+              alert("Event erfolgreich geupdated");
+              console.log(data);
+            });
+          }
+
+          window.location.reload();
+          this.closeNewEntry();
+          this.loadAppointmentsFromDataBase();
+        })
+      })
     }
   }
 
@@ -521,6 +536,7 @@ export class GridComponent implements OnInit {
     isNewEntry = true;
     this.addMoreCategorys();
     this.closeListAppointments();
+    this.loadGroups();
 
     openDate++;
 

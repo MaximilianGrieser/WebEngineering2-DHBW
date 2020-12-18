@@ -38,7 +38,7 @@ export class ApiService {
   }
 
   getEventCategories(eventID: number) {
-    return this.http.get("http://localhost:3000/eventcategories/" + eventID);
+    return this.http.get("http://localhost:3000/eventcategories/" + eventID as any);
   }
 
   getCategories() {
