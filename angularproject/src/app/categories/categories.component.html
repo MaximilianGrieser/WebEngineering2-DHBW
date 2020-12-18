@@ -1,6 +1,7 @@
 <div class="content">
   <label for="scats" id="lcats">ALL CATEGORIES</label>
-  <select multiple class="form-control" id="sCats" ></select>
+  <select multiple class="form-control" id="sCats" [(ngModel)]="selectedLevel"
+          (change)="selectedGroupChanged()"></select>
 
   <form>
     <label for="fcatname">NAME</label><br>

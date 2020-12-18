@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-let ListGroups = document.getElementById("sGroups") as HTMLSelectElement;
-let ListUsers = document.getElementById("sAllUser") as HTMLSelectElement;
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from "../api.service";
 
 @Component({
   selector: 'app-groups',
@@ -9,121 +8,75 @@ let ListUsers = document.getElementById("sAllUser") as HTMLSelectElement;
 })
 export class GroupsComponent implements OnInit {
   selectedLevel: any;
-  private options: any;
+  private groups: any;
+  private users: any
+  private selectedGroup: number;
+  private selectedUserInGroup: number;
+  private selectedUser: number;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    // this.listAllGroups();
-    // this.listAllUsers();
+  constructor(private api: ApiService) {
   }
 
-   listAllGroups() {
-    let request = new XMLHttpRequest();
+  ngOnInit(): void {
+    this.listAllGroups();
+    this.listAllUsers();
+  }
 
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        let groups = JSON.parse(this.responseText);
-        groups.forEach(group => {
-          let item = document.createElement("option");
-          item.innerHTML = group.name;
-          document.getElementById("sGroups").appendChild(item);
-        });
-        console.log(groups);
-      }
-    }
-
-    request.open("GET", "http://localhost:3000/groups", false);
-    request.send();
+  listAllGroups() {
+    this.api.getGroups().subscribe((data) => {
+      this.groups = data;
+      this.groups.forEach(group => {
+        let item = document.createElement("option");
+        item.innerHTML = group.name;
+        document.getElementById("sGroups").appendChild(item);
+      });
+      console.log(this.groups);
+    });
   }
 
   selectedGroupChanged() {
-    let selected = this.selectedLevel;
-    document.getElementById("lUsers").innerHTML = "USERS IN " + this.options[selected].value;
-
-    selected++
-
-    if(selected != 0) this.listAllUsersInGroup(selected);
+    let selected = this.selectedLevel[0];
+    this.selectedGroup = this.groups.find(x => x.name === selected).id;
+    document.getElementById("lUsers").innerHTML = "USERS IN " + selected;
+    if (selected != 0) this.listAllUsersInGroup(this.selectedGroup);
   }
 
   listAllUsersInGroup(groupID) {
     let list = document.getElementById("sUser");
-    while (list.firstChild) {
-      // @ts-ignore
-      list.remove(list.firstChild);
-    }
+    list.innerHTML = "";
 
-    let request = new XMLHttpRequest();
-
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        let users = JSON.parse(this.responseText);
-        users.forEach(user => {
-          let request = new XMLHttpRequest();
-
-          request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-
-              let item = document.createElement("option");
-              item.innerHTML = JSON.parse(this.responseText)[0].userID;
-              list.appendChild(item);
-            }
-          }
-
-          request.open("GET", "http://localhost:3000/users/" + user.userID + "/ID", false);
-          request.send();
+    this.api.getUserGroup(groupID).subscribe((data) => {
+      let users = data;
+      users.forEach(user => {
+        this.api.getUserID(user.userID).subscribe((data) => {
+          let item = document.createElement("option");
+          item.innerHTML = data[0].userID;
+          list.appendChild(item);
         });
-        console.log(users);
-      }
-    }
-
-    request.open("GET", "http://localhost:3000/usersgroup/" + groupID, false);
-    request.send();
+      });
+    });
   }
 
   listAllUsers() {
-    let request = new XMLHttpRequest();
-
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        let users = JSON.parse(this.responseText);
-        users.forEach(user => {
-          let item = document.createElement("option");
-          item.innerHTML = user.userID;
-          document.getElementById("sAllUser").appendChild(item);
-        });
-        console.log(users);
-      }
-    }
-
-    request.open("GET", "http://localhost:3000/users", false);
-    request.send();
+    this.api.getUsers().subscribe((data) => {
+      this.users = data;
+      this.users.forEach(user => {
+        let item = document.createElement("option");
+        item.innerHTML = user.userID;
+        document.getElementById("sAllUser").appendChild(item);
+      });
+      console.log(this.users);
+    });
   }
 
   removeFromGroup() {
     let userID = (<HTMLInputElement>document.getElementById("sUser")).value;
+    let groupID = this.selectedGroup;
 
-    let groupID = ListGroups.selectedIndex;
-    groupID++
-
-    let request = new XMLHttpRequest();
-
-    console.log(userID, groupID)
-
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        let request = new XMLHttpRequest();
-
-        userID = JSON.parse(this.responseText)[0].id;
-
-        request.open("DELETE", "http://localhost:3000/usersgroup/" + userID + "/" + groupID, false);
-        request.send();
-      }
-    }
-
-    request.open("GET", "http://localhost:3000/users/" + userID + "/userID", false);
-    request.send();
-
+    this.api.getLogin(userID).subscribe((data) => {
+      userID = data[0].id;
+      this.api.deleteUserGroup(+userID, groupID).subscribe();
+    });
     location.reload();
   }
 
@@ -134,41 +87,31 @@ export class GroupsComponent implements OnInit {
       name: name
     };
 
-    let request = new XMLHttpRequest();
-
-    request.open("POST", "http://localhost:3000/groups", false);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify(newGroup));
-
+    this.api.postGroup(newGroup).subscribe();
     location.reload();
   }
 
   addUserToGroup() {
-    let groupID = ListGroups.selectedIndex;
-    groupID++
-
-    let userID = ListUsers.selectedIndex;
-    userID++
+    let groupID = this.selectedGroup;
+    let userID = this.selectedUser;
 
     let newEntry = {
       userID: userID,
       groupID: groupID
     }
 
-    console.log(JSON.stringify(newEntry))
-
-    let request = new XMLHttpRequest();
-
-    request.open("POST", "http://localhost:3000/usersgroup", false);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify(newEntry));
-
-    let selected = ListUsers.selectedIndex;
-    selected++
-
+    console.log(newEntry)
+    this.api.postUSerGroup(newEntry).subscribe();
     location.reload();
-    // this.listAllUsersInGroup();
+    this.listAllUsersInGroup(0);
   }
 
 
+  selectedUserInGroupChanged() {
+    this.selectedUserInGroup = this.users.find(x => x.userID === this.selectedLevel[0]).id;
+  }
+
+  selectedUserChanged() {
+    this.selectedUser= this.users.find(x => x.userID === this.selectedLevel[0]).id;
+  }
 }

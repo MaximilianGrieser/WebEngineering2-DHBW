@@ -28,17 +28,12 @@
     <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="router links">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/angularproject/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/categories/categories.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/categories/categories.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/categories/categories.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/categories/categories.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/groups/groups.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/groups/groups.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/angularproject/src/app/groups/groups.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/groups/groups.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/imprint/imprint.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/imprint/imprint.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/imprint/imprint.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/imprint/imprint.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oldproject/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/oldproject/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oldproject/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/oldproject/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oldproject/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/oldproject/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,25 +50,16 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/WebCalendar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs.protractor.protractor_package" value="$PROJECT_DIR$/angularproject/node_modules/protractor" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="C:\Users\kadenm\Documents\WebEngineering2-DHBW\angularproject\node_modules\typescript\lib" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="ts.external.directory.path" value="D:\Repos\WebEngineering2-DHBW\angularproject\node_modules\typescript\lib" />
   </component>
   <component name="RunManager" selected="npm.Angular CLI Server">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="E2E Tests (WebCalendar)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/angularproject/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
@@ -123,6 +109,8 @@
       <workItem from="1608035274750" duration="11222000" />
       <workItem from="1608049200143" duration="230000" />
       <workItem from="1608111220378" duration="17643000" />
+      <workItem from="1608155462238" duration="396000" />
+      <workItem from="1608192297349" duration="19085000" />
     </task>
     <task id="LOCAL-00001" summary="Liste abgearbeitet">
       <created>1607608143865</created>
@@ -211,37 +199,5 @@
     <MESSAGE value="router links" />
     <MESSAGE value="changes 15.12.2020" />
     <option name="LAST_COMMIT_MESSAGE" value="changes 15.12.2020" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1607675999070">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1607675999070" />
-    <state width="1493" height="51" key="GridCell.Tab.0.bottom" timestamp="1608135687014">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.bottom/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608135687014" />
-    <state width="1493" height="51" key="GridCell.Tab.0.center" timestamp="1608135687013">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.center/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608135687013" />
-    <state width="1493" height="51" key="GridCell.Tab.0.left" timestamp="1608135687012">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.left/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608135687012" />
-    <state width="1493" height="51" key="GridCell.Tab.0.right" timestamp="1608135687013">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.right/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608135687013" />
-    <state x="280" y="88" key="Vcs.Push.Dialog.v2" timestamp="1608048958990">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1607689840385" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1607610042109" />
-    <state x="280" y="88" key="Vcs.Push.Dialog.v2/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608048958990" />
-    <state x="91" y="24" key="new project wizard" timestamp="1607608372501">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="91" y="24" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1607608372501" />
   </component>
 </project>

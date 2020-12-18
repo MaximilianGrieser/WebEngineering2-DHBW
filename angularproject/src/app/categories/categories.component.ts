@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ApiService} from "../api.service";
 
 let ListCats = document.getElementById("sCats") as HTMLSelectElement;
 
@@ -8,8 +9,11 @@ let ListCats = document.getElementById("sCats") as HTMLSelectElement;
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
+  selectedLevel: any;
+  private cats: any;
+  private selectedCat: number
 
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   ngOnInit(): void {
 
@@ -17,51 +21,33 @@ export class CategoriesComponent implements OnInit {
   }
 
     listAllCats() {
-      let request = new XMLHttpRequest();
-
-      request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          let cats = JSON.parse(this.responseText);
-          cats.forEach(cat => {
-            let item = document.createElement("option");
-            item.innerHTML = cat.name;
-            document.getElementById("sCats").appendChild(item);
-          });
-          console.log(cats);
-        }
-      }
-
-      request.open("GET", "http://localhost:3000/categories", false);
-      request.send();
+      this.api.getCategories().subscribe((data) => {
+        this.cats = data;
+        this.cats.forEach(cat => {
+          let item = document.createElement("option");
+          item.innerHTML = cat.name;
+          document.getElementById("sCats").appendChild(item);
+        });
+        console.log(this.cats);
+      });
     }
 
     newCategory() {
       let name = (<HTMLInputElement>document.getElementById("fcatname")).value;
-
       let newCat = {
         name: name
       };
 
-      let request = new XMLHttpRequest();
-
-      request.open("POST", "http://localhost:3000/categories", false);
-      request.setRequestHeader("Content-Type", "application/json");
-      request.send(JSON.stringify(newCat));
-
+      this.api.postCategory(newCat).subscribe();
       location.reload();
     }
 
     removeCategory() {
-      let selected = ListCats.selectedIndex;
-      selected++
-
-      let request = new XMLHttpRequest();
-
-      request.open("DELETE", "http://localhost:3000/categories/" + selected, false);
-      request.send();
-
+      this.api.deleteCategory(this.selectedCat).subscribe();
       location.reload();
     }
 
-
+  selectedGroupChanged() {
+    this.selectedCat = this.cats.find(x => x.name === this.selectedLevel[0]).id;;
+  }
 }

@@ -57,15 +57,14 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.session.getUser());
     this.loadAppointmentsFromDataBase();
-
   }
 
   loadAppointmentsFromDataBase(): void {
     this.api.getEvents(this.session.getUser()).subscribe((data) => {
       appointmentsList = data;
       console.log(appointmentsList);
+      this.loadCategorysFromDataBase();
       this.showCalendar(currentMonth, currentYear);
     });
 
@@ -121,7 +120,6 @@ export class GridComponent implements OnInit {
             appointmentsGrid[i][j] = appointmentsAtDayList;
 
           }
-
         }
         date++;
       }
@@ -247,16 +245,11 @@ export class GridComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("fhomepage")).value = currAppointment.webpage;
             (<HTMLInputElement>document.getElementById("flocation")).value = currAppointment.location;
 
-            let request = new XMLHttpRequest();
             let categories = [];
-            request.onreadystatechange = function () {
-              if (this.readyState == 4 && this.status == 200) {
-                categories = JSON.parse(this.responseText);
-                console.log(this.responseText);
-              }
-            }
-            request.open("GET", "http://localhost:3000/eventcategories/" + currAppointment.id, false);
-            request.send();
+            this.api.getEventCategories(currAppointment.id).subscribe((data) => {
+              categories = data;
+              console.log(this.responseText);
+            });
 
             if (categories.length == 1) {
               (<HTMLInputElement>document.getElementById("fcategory-0")).value = categories[0].name;
@@ -317,15 +310,15 @@ export class GridComponent implements OnInit {
   blurScreenAndButton() {
     document.getElementById("calender").classList.add("blur");
     document.getElementById("calender").style.pointerEvents = "none";
-    //document.getElementById("add-callender-entry")).classList.add("blur");
-    //HTMLDivElement>document.getElementById("add-callender-entry")).style.pointerEvents = "none";
+    document.getElementById("add-callender-entry").classList.add("blur");
+    document.getElementById("add-callender-entry").style.pointerEvents = "none";
   }
 
   removeBlurScreenAndButton() {
     document.getElementById("calender").classList.remove("blur");
     document.getElementById("calender").style.pointerEvents = "";
-    // document.getElementById("add-callender-entry").classList.remove("blur");
-    // document.getElementById("add-callender-entry").style.pointerEvents = "";
+    document.getElementById("add-callender-entry").classList.remove("blur");
+    document.getElementById("add-callender-entry").style.pointerEvents = "";
   }
 
   resetInputFields() {
@@ -411,13 +404,14 @@ export class GridComponent implements OnInit {
     let checkBox = (document.getElementById("fganztag") as HTMLInputElement).checked;
     let sTime
     let eTime;
-    let eDate;
+    let eDate
+    let eDateValue;
     if (checkBox) {
       sTime = "00:00";
       eTime = "23:59";
-      eDate = sDate;
+      eDateValue = sDateValue;
     } else {
-      sTime = document.getElementById("fstarttime");
+      sTime = (document.getElementById("fstarttime") as HTMLInputElement);
       if (sTime.value === "") {
         sTime.classList.add("false-input");
         checked = false;
@@ -425,15 +419,16 @@ export class GridComponent implements OnInit {
         sTime = sTime.value.slice(0, 5);
       }
 
-      eDate = document.getElementById("fenddate");
+      eDate = (document.getElementById("fenddate") as HTMLInputElement);
+      let eDateValue
       if (eDate.value === "") {
         eDate.classList.add("false-input");
         checked = false;
       } else {
-        eDate = eDate.value.slice(0, 10);
+        eDateValue = eDate.value.slice(0, 10);
       }
 
-      eTime = document.getElementById("fendtime");
+      eTime = (document.getElementById("fendtime") as HTMLInputElement);
       if (eTime.value === "") {
         eTime.classList.add("false-input");
         checked = false;
@@ -442,7 +437,7 @@ export class GridComponent implements OnInit {
       }
     }
 
-    let organizer = document.getElementById("femail") as HTMLInputElement;
+    let organizer = (document.getElementById("femail") as HTMLInputElement);
     let organizerValue;
     if (organizer.value === "" || organizer.value.length > 50) {
       organizer.classList.add("false-input");
@@ -451,7 +446,7 @@ export class GridComponent implements OnInit {
       organizerValue = organizer.value;
     }
 
-    let location = document.getElementById("flocation") as HTMLInputElement;
+    let location = (document.getElementById("flocation") as HTMLInputElement);
     let locationValue;
     if (location.value.length > 50) {
       location.classList.add("false-input");
@@ -460,7 +455,7 @@ export class GridComponent implements OnInit {
       locationValue = location.value;
     }
 
-    let website = document.getElementById("fhomepage") as HTMLInputElement;
+    let website = (document.getElementById("fhomepage") as HTMLInputElement);
     let websiteValue;
     if (website.value.length > 100) {
       website.classList.add("false-input");
@@ -471,49 +466,43 @@ export class GridComponent implements OnInit {
 
     let cats = [];
     let selects = document.getElementsByClassName("fcategory");
+
     for (var i = 0, len = selects.length; i < len; i++) {
       cats.push(options[(<HTMLSelectElement>selects[i]).selectedIndex]);
     }
 
-    if(checked) {    setTimeout(() => {
+    if (checked) {
       let entry = {
         userID: this.session.getUser(),
-        title: title,
-        location: location,
-        organizer: organizer,
-        start: sDate + "T" + sTime,
-        end: eDate + "T" + eTime,
+        title: titleValue,
+        location: locationValue,
+        organizer: organizerValue,
+        start: sDateValue + "T" + sTime,
+        end: eDateValue + "T" + eTime,
         status: (<HTMLSelectElement>document.getElementById("fstatus")).selectedIndex,
         allday: checkBox,
-        webpage: website,
+        webpage: websiteValue,
         categories: cats,
         extra: (<HTMLInputElement>document.getElementById("fsummary")).value
       }
 
-      let request = new XMLHttpRequest();
-
-      request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Event erfolgreich geadded");
-          console.log(this.responseText);
-          window.location.reload();
-        }
-      }
-
       if (isNewEntry) {
-        request.open("POST", "http://localhost:3000/events", true);
+        this.api.postEvent(entry).subscribe((data) => {
+          alert("Event erfolgreich geadded");
+          console.log(data);
+          window.location.reload();
+        });
       } else {
-        console.log(selectedRow, selectedCell, selectedId);
-        console.log(appointmentsGrid[selectedRow][selectedCell][selectedId].id);
-        request.open("PUT", "http://dhbw.radicalsimplicity.com/calendar/2319319/events/" + appointmentsGrid[selectedRow][selectedCell][selectedId].id, true);
+        this.api.putEvent(appointmentsGrid[selectedRow][selectedCell][selectedId].id, entry).subscribe((data) => {
+          alert("Event erfolgreich geupdated");
+          console.log(data);
+          window.location.reload();
+        });
       }
-      console.log(JSON.stringify(entry));
-      request.setRequestHeader("Content-Type", "application/json");
-      request.send(JSON.stringify(entry));
 
       this.closeNewEntry();
       this.loadAppointmentsFromDataBase();
-    }, 300);}
+    }
   }
 
   closeListAppointments() {
@@ -525,15 +514,17 @@ export class GridComponent implements OnInit {
   }
 
   newEntryIcon() {
-    isNewEntry = true;
-    this.addMoreCategorys();
     this.newEntry();
   }
 
   newEntry() {
+    isNewEntry = true;
+    this.addMoreCategorys();
     this.closeListAppointments();
 
-    let today = new Date(currentYear, currentMonth, openDate + 1).toISOString().slice(0, 10);
+    openDate++;
+
+    let today = new Date(currentYear, currentMonth, openDate).toISOString().slice(0, 10);
     (<HTMLInputElement>document.getElementById("fstartdate")).value = today;
 
     this.blurScreenAndButton();
@@ -543,8 +534,16 @@ export class GridComponent implements OnInit {
 
   newEntryBtn() {
     openDate = todayDate;
-    isNewEntry = true;
-    this.addMoreCategorys();
     this.newEntry();
+  }
+
+  loadCategorysFromDataBase() {
+    this.api.getCategories().subscribe((data) => {
+      console.log("Read Categories");
+      console.log(data);
+      data.forEach(category => {
+        options.push(category);
+      })
+    });
   }
 }

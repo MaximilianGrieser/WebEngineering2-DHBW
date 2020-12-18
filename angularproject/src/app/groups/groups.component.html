@@ -3,21 +3,22 @@
     <label for="sGroups">EXISTING GROUPS</label>
     <select multiple class="form-control" id="sGroups" [(ngModel)]="selectedLevel"
             (change)="selectedGroupChanged()"></select>
-    <button type="button" class="btn btn-secondary" (click)="newGroup()">New Group</button>
-  </div>
-  <div class="items">
-    <label for="sUser" id="lUsers">PLEASE SELECT A GROUP</label>
-    <select multiple class="form-control" id="sUser"></select>
-    <button type="button" class="btn btn-secondary" (click)="removeFromGroup()">REMOVE USER FROM GROUP</button>
-  </div>
-  <div class="items">
-    <label for="sAllUser" id="lAllUsers">ALL USERS</label>
-    <select multiple class="form-control" id="sAllUser"></select>
-
     <form>
       <label for="fgroupname">NAME</label><br>
       <input type="text" class="form-control" id="fgroupname" name="groupname">
     </form>
+    <button type="button" class="btn btn-secondary" (click)="newGroup()">New Group</button>
+  </div>
+  <div class="items">
+    <label for="sUser" id="lUsers">PLEASE SELECT A GROUP</label>
+    <select multiple class="form-control" id="sUser"[(ngModel)]="selectedLevel"
+            (change)="selectedUserInGroupChanged()"></select>
+    <button type="button" class="btn btn-secondary" (click)="removeFromGroup()">REMOVE USER FROM GROUP</button>
+  </div>
+  <div class="items">
+    <label for="sAllUser" id="lAllUsers">ALL USERS</label>
+    <select multiple class="form-control" id="sAllUser"[(ngModel)]="selectedLevel"
+            (change)="selectedUserChanged()"></select>
     <button type="button" class="btn btn-secondary" (click)="addUserToGroup()">ADD USER TO GROUP</button>
   </div>
 </div>
