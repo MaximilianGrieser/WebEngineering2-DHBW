@@ -25,11 +25,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="router links">
+    <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="uff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

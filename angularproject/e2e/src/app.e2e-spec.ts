@@ -3,7 +3,7 @@ import { browser, logging } from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
-
+ // modules installieren
   beforeEach(() => {
     page = new AppPage();
   });
