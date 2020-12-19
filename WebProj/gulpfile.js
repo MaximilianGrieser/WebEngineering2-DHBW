@@ -2,6 +2,7 @@ var gulp = require('gulp');
 const exec = require('child_process').exec;
 const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
+var gls = require('gulp-live-server');
 
 function ngBuild(cb) {
     console.log(' # Building Angular');
@@ -13,15 +14,10 @@ function ngBuild(cb) {
         });
 };
 
-function startExpress(cb) {
-    console.log(' # Starting Express');
-    return exec('cd ../Backend && node app.js',
-        function(err, stdout, stderr) {
-          console.log(stdout);
-          console.log(stderr);
-          cb(err);
-        });
-}
+ function startExpress() {
+    var server = gls.new('./../Backend/app.js');
+    return server.start();
+  };
 
 function tsLint(cb) {
     console.log(' # TSLint');
@@ -47,4 +43,4 @@ function ngCopie(cb) {
     cb();
 };
 
-exports.build = gulp.series(ngBuild, ngCopie, tsLint, gulp.parallel(backendTest, startExpress));
+exports.build = gulp.series(ngBuild, ngCopie, tsLint, startExpress);

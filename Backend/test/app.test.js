@@ -1,6 +1,3 @@
-//Require the dev-dependencies
-//import * as browser from "express/lib/request";
-
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
