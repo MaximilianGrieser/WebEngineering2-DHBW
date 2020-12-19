@@ -1,0 +1,46 @@
+Index: oldproject/node_modules/.bin/jsdoc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- oldproject/node_modules/.bin/jsdoc	(date 1608392779237)
++++ oldproject/node_modules/.bin/jsdoc	(date 1608392779237)
+@@ -0,0 +1,15 @@
++#!/bin/sh
++basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
++
++case `uname` in
++    *CYGWIN*|*MINGW*|*MSYS*) basedir=`cygpath -w "$basedir"`;;
++esac
++
++if [ -x "$basedir/node" ]; then
++  "$basedir/node"  "$basedir/../jsdoc/jsdoc.js" "$@"
++  ret=$?
++else 
++  node  "$basedir/../jsdoc/jsdoc.js" "$@"
++  ret=$?
++fi
++exit $ret
+Index: oldproject/node_modules/.bin/mkdirp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- oldproject/node_modules/.bin/mkdirp	(date 1608392779248)
++++ oldproject/node_modules/.bin/mkdirp	(date 1608392779248)
+@@ -0,0 +1,15 @@
++#!/bin/sh
++basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
++
++case `uname` in
++    *CYGWIN*|*MINGW*|*MSYS*) basedir=`cygpath -w "$basedir"`;;
++esac
++
++if [ -x "$basedir/node" ]; then
++  "$basedir/node"  "$basedir/../mkdirp/bin/cmd.js" "$@"
++  ret=$?
++else 
++  node  "$basedir/../mkdirp/bin/cmd.js" "$@"
++  ret=$?
++fi
++exit $ret
