@@ -9,11 +9,13 @@ const { request } = require('express');
 const jsonParser = bodyParser.json();
 const cors = require('cors')
 
-
+/*
 const server = app.listen(4000, function(){
     console.log("API en cours d'exécution sur le port 3000");
 });
-module.exports = server;
+
+ */
+
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -267,5 +269,6 @@ app.get("/eventcategories/:eventid",jsonParser, (req, res) => {
     })
 })
 
-app.listen(port, () => console.log('Calender App listening on port ' + port + '!'))
+const server = app.listen(port, () => console.log('Calender App listening on port ' + port + '!'));
+module.exports = server;
 
