@@ -50,6 +50,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/WebCalendar" />
@@ -109,6 +110,7 @@
       <workItem from="1608049200143" duration="230000" />
       <workItem from="1608111220378" duration="18170000" />
       <workItem from="1608192686420" duration="12961000" />
+      <workItem from="1608414834274" duration="733000" />
     </task>
     <task id="LOCAL-00001" summary="Liste abgearbeitet">
       <created>1607608143865</created>
