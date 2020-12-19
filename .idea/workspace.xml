@@ -25,17 +25,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="uff">
+    <list default="true" id="b3558699-37fb-40f6-96ab-56e04cc35000" name="Default Changelist" comment="router links">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/e2e/src/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/e2e/src/app.po.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/e2e/src/app.po.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angularproject/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oldproject/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/oldproject/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oldproject/test/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/oldproject/test/app.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/api.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angularproject/src/app/grid/grid.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,13 +58,10 @@
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/WebCalendar" />
     <property name="nodejs.protractor.protractor_package" value="$PROJECT_DIR$/angularproject/node_modules/protractor" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
     <property name="ts.external.directory.path" value="C:\Users\kadenm\Documents\WebEngineering2-DHBW\angularproject\node_modules\typescript\lib" />
   </component>
-  <component name="RunManager" selected="Protractor.workspace-project App.login">
+  <component name="RunManager" selected="npm.Angular CLI Server">
     <configuration name="E2E Tests (WebCalendar)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/angularproject/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
@@ -78,34 +69,6 @@
       <protractor-options value="" />
       <envs />
       <scope-kind value="ALL" />
-      <method v="2" />
-    </configuration>
-    <configuration name="workspace-project App.login page works" type="JavaScriptTestRunnerProtractor" temporary="true" nameIsGenerated="true">
-      <config-file value="$PROJECT_DIR$/angularproject/e2e/protractor.conf.js" />
-      <node-interpreter value="project" />
-      <protractor-package value="$PROJECT_DIR$/angularproject/node_modules/protractor" />
-      <protractor-options value="" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/angularproject/e2e/src/app.e2e-spec.ts" />
-      <test-names>
-        <test-name value="workspace-project App" />
-        <test-name value="login page works" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="workspace-project App.login" type="JavaScriptTestRunnerProtractor" temporary="true" nameIsGenerated="true">
-      <config-file value="$PROJECT_DIR$/angularproject/e2e/protractor.conf.js" />
-      <node-interpreter value="project" />
-      <protractor-package value="$PROJECT_DIR$/angularproject/node_modules/protractor" />
-      <protractor-options value="" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/angularproject/e2e/src/app.e2e-spec.ts" />
-      <test-names>
-        <test-name value="workspace-project App" />
-        <test-name value="login" />
-      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
@@ -126,8 +89,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Protractor.workspace-project App.login" />
-        <item itemvalue="Protractor.workspace-project App.login page works" />
         <item itemvalue="Node.js.app.js" />
       </list>
     </recent_temporary>
@@ -150,11 +111,7 @@
       <workItem from="1608035274750" duration="11222000" />
       <workItem from="1608049200143" duration="230000" />
       <workItem from="1608111220378" duration="18170000" />
-      <workItem from="1608192686420" duration="13785000" />
-      <workItem from="1608280583339" duration="9520000" />
-      <workItem from="1608290231383" duration="883000" />
-      <workItem from="1608292327107" duration="16176000" />
-      <workItem from="1608392189853" duration="350000" />
+      <workItem from="1608192686420" duration="12961000" />
     </task>
     <task id="LOCAL-00001" summary="Liste abgearbeitet">
       <created>1607608143865</created>
@@ -212,14 +169,7 @@
       <option name="project" value="LOCAL" />
       <updated>1608136023988</updated>
     </task>
-    <task id="LOCAL-00009" summary="uff">
-      <created>1608217994437</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1608217994437</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,115 +207,6 @@
     <MESSAGE value="router links" />
     <MESSAGE value="changes 15.12.2020" />
     <MESSAGE value="changes 16.12.20" />
-    <MESSAGE value="uff" />
-    <option name="LAST_COMMIT_MESSAGE" value="uff" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1608318757957">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608318757957" />
-    <state x="498" y="192" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1608211219774">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="498" y="192" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608211219774" />
-    <state x="516" y="131" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1608208076606">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="516" y="131" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608208076606" />
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1607675999070">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1607675999070" />
-    <state width="1493" height="243" key="GridCell.Tab.0.bottom" timestamp="1608319873531">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1237" height="35" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1608192739750" />
-    <state width="1493" height="243" key="GridCell.Tab.0.bottom/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873531" />
-    <state width="1493" height="243" key="GridCell.Tab.0.center" timestamp="1608319873531">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1237" height="35" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1608192739749" />
-    <state width="1493" height="243" key="GridCell.Tab.0.center/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873531" />
-    <state width="1493" height="243" key="GridCell.Tab.0.left" timestamp="1608319873530">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1237" height="35" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1608192739748" />
-    <state width="1493" height="243" key="GridCell.Tab.0.left/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873530" />
-    <state width="1493" height="243" key="GridCell.Tab.0.right" timestamp="1608319873531">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1237" height="35" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1608192739749" />
-    <state width="1493" height="243" key="GridCell.Tab.0.right/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873531" />
-    <state width="1493" height="107" key="GridCell.Tab.1.bottom" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.1.bottom/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.1.center" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.1.center/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.1.left" timestamp="1608319873517">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.1.left/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873517" />
-    <state width="1493" height="107" key="GridCell.Tab.1.right" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.1.right/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.2.bottom" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.2.bottom/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.2.center" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.2.center/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.2.left" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.2.left/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.2.right" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.2.right/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.3.bottom" timestamp="1608319873519">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.3.bottom/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873519" />
-    <state width="1493" height="107" key="GridCell.Tab.3.center" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.3.center/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.3.left" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.3.left/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state width="1493" height="107" key="GridCell.Tab.3.right" timestamp="1608319873518">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="107" key="GridCell.Tab.3.right/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608319873518" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1608211230268">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="277" y="57" key="SettingsEditor/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608211230268" />
-    <state x="280" y="88" key="Vcs.Push.Dialog.v2" timestamp="1608217996996">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1607689840385" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1607610042109" />
-    <state x="280" y="88" key="Vcs.Push.Dialog.v2/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608217996996" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608281902857">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608281902857" />
-    <state x="91" y="24" key="new project wizard" timestamp="1607608372501">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="91" y="24" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1607608372501" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608208177179">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1608208177179" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes 16.12.20" />
   </component>
 </project>
