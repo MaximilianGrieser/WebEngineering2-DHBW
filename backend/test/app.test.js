@@ -1,5 +1,5 @@
 //Require the dev-dependencies
-import * as browser from "express/lib/request";
+//import * as browser from "express/lib/request";
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -19,7 +19,7 @@ describe('Users', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(1);
+                    res.body.length.should.be.eql(0);
                     done();
                 });
         });
@@ -59,7 +59,7 @@ describe('Groups', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(1);
+                    res.body.length.should.be.eql(0);
                     done();
                 });
         });

@@ -14,9 +14,10 @@ function ngBuild(cb) {
     });
 };
 
-function startExpress() {
-  var server = gls.new('./../oldproject/app.js');
-  return server.start();
+function ngCopie(cb) {
+  console.log(' # Copying Dist');
+  gulp.src('dist/WebCalendar/*').pipe(gulp.dest('./../backend/public'));
+  cb();
 };
 
 function tsLint(cb) {
@@ -33,14 +34,17 @@ function tsLint(cb) {
 
 function backendTest(cb) {
   console.log(' # Backend Testing');
-  gulp.src('./../oldproject/test/app.test.js').pipe(mocha());
-  cb();
+  return exec('cd ../backend/test && mocha app.test.js -exit',
+    function(err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
 };
 
-function ngCopie(cb) {
-  console.log(' # Copying Dist');
-  gulp.src('dist/WebCalendar/*').pipe(gulp.dest('./../oldproject/public'));
-  cb();
+function startExpress() {
+  var server = gls.new('./../backend/app.js');
+  return server.start();
 };
 
-exports.build = gulp.series(ngBuild, ngCopie, tsLint, startExpress);
+exports.build = gulp.series(ngBuild, ngCopie, tsLint,backendTest, startExpress);
