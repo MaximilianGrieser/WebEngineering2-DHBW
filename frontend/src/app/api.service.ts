@@ -9,6 +9,10 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
+  postUser(user: object) {
+    return this.http.post("http://localhost:3000/users", user);
+  }
+
   getUsers() {
     return this.http.get("http://localhost:3000/users") as any;
   }

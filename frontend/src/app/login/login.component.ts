@@ -28,12 +28,7 @@ export class LoginComponent implements OnInit {
       password: password
     }
 
-    let request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:3000/users", true);
-
-    console.log(JSON.stringify(newUser));
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify(newUser));
+    this.api.postUser(newUser);
   }
 
   login() {
