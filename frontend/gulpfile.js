@@ -32,19 +32,9 @@ function tsLint(cb) {
   cb();
 };
 
-function backendTest(cb) {
-  console.log(' # Backend Testing');
-  return exec('cd ../backend/test && mocha app.test.js -exit',
-    function(err, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      cb(err);
-    });
-};
-
 function startExpress() {
   var server = gls.new('./../backend/app.js');
   return server.start();
 };
 
-exports.build = gulp.series(ngBuild, ngCopie, tsLint,backendTest, startExpress);
+exports.build = gulp.series(ngBuild, ngCopie, tsLint, startExpress);
