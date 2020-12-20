@@ -71,6 +71,11 @@ export class GridComponent implements OnInit {
 
   }
 
+  /**
+   * Fills arrays: daysGrid  with correct dates and appointmentsGrid with appointments
+   * @param month
+   * @param year
+   */
   showCalendar(month, year): void {
     const firstDay = ((new Date(year, month)).getDay());
     const daysInMonth = 32 - new Date(year, month, 32).getDate();
@@ -132,6 +137,9 @@ export class GridComponent implements OnInit {
     this.printDaysGrid();
   }
 
+  /**
+   * Fills calendar grid with dates and appoinments from arrays: daysGrid and appointmentsGrid
+   */
   printDaysGrid(): void {
     for (let i = 0; i < 6; i++) {
       for (let y = 0; y < 7; y++) {
@@ -150,7 +158,13 @@ export class GridComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Gets appointments at specified date
+   * @param year
+   * @param month
+   * @param date
+   * @returns List with appointments at specified date
+   */
   appointmentsAtDay(year, month, date): object[] {
     const filterString = new Date(year, month, date + 1).toISOString().slice(0, 10);
     const appointmentsAtDayList = [];
@@ -174,18 +188,32 @@ export class GridComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads next month of currently shown month in calendar view
+   */
   nextMonth(): void {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
     this.showCalendar(currentMonth, currentYear);
   }
 
+  /**
+   * Loads previous month of currently shown month in calendar view
+   */
   prevMonth(): void {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
     this.showCalendar(currentMonth, currentYear);
   }
 
+  /**
+   * Shows div on top of the calendar view. This div contains the appointments of the selected date.
+   * This div includes interactive components that allow the user to add an appointment.
+   * When an appintment is selected it can be shown (the form for creating an appointment opens, but is filled with detail regarding the selected event)
+   * and deleted.
+   * @param row
+   * @param cell
+   */
   listAppointments(row, cell) {
     if (document.getElementById("weekday_days_" + cell + "_row_" + row).classList.contains("day-not-in-month") == false) {
       selectedRow = row;
@@ -290,6 +318,9 @@ export class GridComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads existing groups so they can be added to an appointment
+   */
   loadGroups() {
     this.api.getGroups().subscribe((data) => {
       groups = data;
@@ -302,6 +333,10 @@ export class GridComponent implements OnInit {
     })
   }
 
+  /**
+   * Closes form to create new entry.
+   * User will see calendar view again.
+   */
   closeNewEntry() {
     this.removeRedBorders();
     if ((<HTMLInputElement>document.getElementById("fganztag")).checked == true) {
@@ -370,6 +405,9 @@ export class GridComponent implements OnInit {
     document.getElementById("femail").classList.remove("false-input");
   }
 
+  /**
+   * Enables user to add more than one category to an event
+   */
   addMoreCategorys() {
     let doc = document.getElementById("table-select-td");
     if (doc.children.length >= options.length) {
@@ -520,6 +558,10 @@ export class GridComponent implements OnInit {
     }
   }
 
+  /**
+   * Closes view of appointments.
+   * User will see calendar view again.
+   */
   closeListAppointments() {
     let listAppointment = document.getElementById("appointments-at-day");
     if (listAppointment.style.display === "block") {

@@ -69,6 +69,9 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  /**
+   * Removes selected user from selected group
+   */
   removeFromGroup() {
     let userID = (<HTMLInputElement>document.getElementById("sUser")).value;
     let groupID = this.selectedGroup;
