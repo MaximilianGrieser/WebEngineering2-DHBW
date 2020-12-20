@@ -25,9 +25,9 @@ describe('workspace-project App', () => {
     });
   });
 
-  it('login with wrong credentials, should stay at login page', function () {
+  it('login with non existing user, should stay at login page', function () {
     return page.navigateTo().then(value => {
-      return element(by.id('fuserid')).sendKeys('admin').then(() => {
+      return element(by.id('fuserid')).sendKeys('Hasdaws').then(() => {
         return element(by.id('fpassword')).sendKeys('wrongpw').then(() => {
           return element(by.id('flogin')).click().then(() => {
             browser.waitForAngular();
