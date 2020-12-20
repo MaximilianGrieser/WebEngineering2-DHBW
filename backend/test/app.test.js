@@ -24,28 +24,6 @@ describe('Users', () => {
                 });
         });
     });
-    /*
-    describe('/POST user', () => {
-        it('it should not POST a user without password field', (done) => {
-            let user = {
-                userID: "FranFine",
-            }
-            chai.request(server)
-                .post('/users')
-                .send(user)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('errors');
-                    res.body.errors.should.have.property('password');
-                    res.body.errors.password.should.have.property('kind').eql('required');
-                    done();
-                });
-        });
-
-    });
-
-     */
 });
 
 describe('Groups', () => {
