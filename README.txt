@@ -1,3 +1,5 @@
+This Project is made by 2319319 and 7872819
+
 Navigate to frontend and run npm install
 navigate to backend and run npm install
 
