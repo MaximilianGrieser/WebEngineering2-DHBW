@@ -77,6 +77,10 @@ function createUsers(){
         if(err) throw err
         console.log("Created Table Users");
     });
+    con.query("INSERT INTO users(userID, password) VALUES ('admin', 'pw')", function(err) {
+        if(err) throw err
+        console.log("Created Test User");
+    });
 }
 
 function createEvents(){
@@ -91,12 +95,20 @@ function createGroups(){
         if(err) throw err
         console.log("Created Table Users");
     });
+    con.query("INSERT INTO groups(name) VALUES ('Team')", function(err) {
+        if(err) throw err
+        console.log("Created Group");
+    });
 }
 
 function createUserGroup() {
     con.query("CREATE TABLE usergroup(id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userID VARCHAR(255) NOT NULL, groupID VARCHAR(255) NOT NULL)", function(err) {
         if(err) throw err
         console.log("Created Table UserGroup");
+    });
+    con.query("INSERT INTO usergroup(userID, groupID) VALUES ('1', '1')", function(err) {
+        if(err) throw err
+        console.log("Created Group");
     });
 }
 
@@ -149,7 +161,6 @@ app.get("/users/:id/:field", jsonParser, (req, res) => {
     }
 })
 
-// ID atribute und all day muss extra gehandelt werden.
 app.post("/events", jsonParser, (req, res) => {
     let eventID;
     con.query("INSERT INTO events(userID, title, location, organizer, start, end, statusId, allday, webpage, extra) VALUES('"+ req.body.userID + "','" + req.body.title + "','" + req.body.location + "','" + req.body.organizer + "','" + req.body.start + "','" + req.body.end + "','" + req.body.status + "','" + req.body.allday + "','" + req.body.webpage + "','" + req.body.extra +"')", function(err, result) {
@@ -184,9 +195,6 @@ app.delete("/events/:id", jsonParser, (req, res) => {
 })
 
 app.put("/events/:id", jsonParser, (req, res) => {
-    //UPDATE table_name
-    //SET column1 = value1, column2 = value2, ...
-    //WHERE condition;
     con.query("", function(err, ress){
         if(err) throw err
         console.log("Updated envent with id: " + req.params.id);
