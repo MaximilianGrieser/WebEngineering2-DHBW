@@ -246,6 +246,8 @@ export class GridComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("fhomepage")).value = currAppointment.webpage;
             (<HTMLInputElement>document.getElementById("flocation")).value = currAppointment.location;
 
+            (<HTMLInputElement>document.getElementById("fsubmit")).disabled = true;
+
             self.loadGroups();
 
             let categories: any = [];
@@ -343,6 +345,7 @@ export class GridComponent implements OnInit {
     (<HTMLInputElement>document.getElementById("fhomepage")).value = "";
     (<HTMLInputElement>document.getElementById("flocation")).value = "";
     (<HTMLElement>document.getElementById("table-select-td")).innerHTML = "";
+    (<HTMLInputElement>document.getElementById("fsubmit")).disabled = false;
     counter = 0;
   }
 

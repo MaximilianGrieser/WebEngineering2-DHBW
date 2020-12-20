@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SessionService} from "../session.service";
 import {ApiService} from "../api.service";
+import {element} from "protractor";
 
 
 
@@ -40,6 +41,8 @@ export class LoginComponent implements OnInit {
         this.session.setUser(data[0].id);
         console.log("Login Succesfull " + data[0].id);
         this.router.navigateByUrl('/grid');
+      } else {
+        alert("Password Incorrect");
       }
     });
 
